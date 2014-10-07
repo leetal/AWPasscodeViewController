@@ -1,0 +1,11 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'AWPasscodeViewController', :exclusive => true do
+  pod "AWPasscodeViewController", :path => "../"
+end
+
+target 'Tests', :exclusive => true do
+  pod "AWPasscodeViewController", :path => "../"
+
+  
+end
