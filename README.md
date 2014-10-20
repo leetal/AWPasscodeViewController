@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AWPasscodeViewController
 
 [![CI Status](http://img.shields.io/travis/Alexander Widerberg/AWPasscodeViewController.svg?style=flat)](https://travis-ci.org/Alexander Widerberg/AWPasscodeViewController)
@@ -26,3 +27,9 @@ Alexander Widerberg, alexander.widerberg@cloudme.com
 
 AWPasscodeViewController is available under the MIT license. See the LICENSE file for more info.
 
+=======
+AWPasscodeViewController
+========================
+
+A iOS6+ passcode view controller
+>>>>>>> fa337f389eac37e75628df18957b52b229316121
