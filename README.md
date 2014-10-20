@@ -1,6 +1,6 @@
 # AWPasscodeViewController
 
-[![CI Status](http://img.shields.io/travis/Alexander Widerberg/AWPasscodeViewController.svg?style=flat)](https://travis-ci.org/Alexander Widerberg/AWPasscodeViewController)
+[![CI Status](http://img.shields.io/travis/leetal/AWPasscodeViewController.svg?style=flat)](https://travis-ci.org/Alexander Widerberg/AWPasscodeViewController)
 [![Version](https://img.shields.io/cocoapods/v/AWPasscodeViewController.svg?style=flat)](http://cocoadocs.org/docsets/AWPasscodeViewController)
 [![License](https://img.shields.io/cocoapods/l/AWPasscodeViewController.svg?style=flat)](http://cocoadocs.org/docsets/AWPasscodeViewController)
 [![Platform](https://img.shields.io/cocoapods/p/AWPasscodeViewController.svg?style=flat)](http://cocoadocs.org/docsets/AWPasscodeViewController)
