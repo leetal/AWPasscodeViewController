@@ -7,12 +7,28 @@
 //
 
 #import "AWAppDelegate.h"
+#import "AWViewController.h"
+#import <AWPasscodeViewController/AWPasscodeHandler.h>
 
 @implementation AWAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    
+    AWViewController *testVC = [[AWViewController alloc] init];
+    testVC.title = nil;
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController: testVC];
+    
+    self.window.rootViewController = navController;
+    [self.window makeKeyAndVisible];
+    
+    if ([AWPasscodeHandler doesPasscodeExist] &&
+        [AWPasscodeHandler didPasscodeTimerEnd]) {
+        [[AWPasscodeHandler sharedHandler] showLockScreenWithAnimation:YES];
+    }
+    
     return YES;
 }
 							

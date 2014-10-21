@@ -18,7 +18,9 @@
  @brief The window holding a reference to AWPAsscodeViewController
  */
 @property (nonatomic, strong) UIWindow  *passcodeWindow;
-
+/**
+ @brief The view controller AWPAsscodeViewController
+ */
 @property (nonatomic, strong) AWPasscodeViewController *passcodeVC;
 /**
  @brief The string to be used as username for the passcode in the Keychain.
@@ -52,11 +54,6 @@
  @brief The maximum number of failed attempts allowed.
  */
 @property (nonatomic, assign) NSInteger maxNumberOfAllowedFailedAttempts;
-
-- (void)showLockScreenWithAnimation:(BOOL)animated;
-
-- (BOOL) validatePasscode:(NSString *)typedString;
-
 /**
  @brief  Returns a Boolean value that indicates whether a passcode exists (@c YES) or not (@c NO).
  @return @c YES if a passcode is enabled. This also means it is enabled, unless custom logic was added to the library.
@@ -100,4 +97,18 @@
  @param useKeychain Set to @c NO if you want to save and read the passcode and timers to and from somewhere else rather than the Keychain. Default is @c YES.
  */
 + (void)useKeychain:(BOOL)useKeychain;
+/**
+ @brief Resets the singleton and clears any strong references that can cause problems
+ */
++ (void)resetHandler;
+
+// #### Methods used to display the passcode
+- (void)showLockScreenWithAnimation:(BOOL)animated;
+- (void)displayPasscodeToEnable:(UIViewController*)viewController asModal:(BOOL)modally;
+- (void)displayPasscodeToChange:(UIViewController*)viewController asModal:(BOOL)modally;
+- (void)displayPasscodeToDisable:(UIViewController*)viewController asModal:(BOOL)modally;
+
+// #### Validating methods
+- (BOOL)validatePasscode:(NSString *)typedString;
+
 @end

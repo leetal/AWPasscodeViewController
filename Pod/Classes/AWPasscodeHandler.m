@@ -94,27 +94,26 @@
     [[AWPasscodeHandler sharedHandler] _saveTimerStartTime];
 }
 
-
 + (BOOL)didPasscodeTimerEnd {
     return [[AWPasscodeHandler sharedHandler] _didPasscodeTimerEnd];
 }
-
 
 + (void)deletePasscodeAndClose {
     [[AWPasscodeHandler sharedHandler] _deletePasscode];
     [[AWPasscodeHandler sharedHandler] _dismissMe];
 }
 
-
 + (void)deletePasscode {
     [[AWPasscodeHandler sharedHandler] _deletePasscode];
 }
-
 
 + (void)useKeychain:(BOOL)useKeychain {
     [[AWPasscodeHandler sharedHandler] _useKeychain:useKeychain];
 }
 
++ (void)resetHandler {
+    [[AWPasscodeHandler sharedHandler] _resetHandler];
+}
 
 #pragma mark - Private methods
 - (void)_useKeychain:(BOOL)useKeychain {
@@ -128,10 +127,6 @@
 
 
 - (NSTimeInterval)_timerDuration {
-    //if (!_usesKeychain &&
-    //    [self.delegate respondsToSelector:@selector(timerDuration)]) {
-    //    return [self.delegate timerDuration];
-    //}
     
     NSString *keychainValue =
     [AWKeychainUtils getPasswordForUsername:_keychainTimerDurationUsername
@@ -143,12 +138,6 @@
 
 
 - (void)_saveTimerDuration:(NSTimeInterval) duration {
-    //if (!_usesKeychain &&
-    //    [self.delegate respondsToSelector:@selector(saveTimerDuration:)]) {
-    //    [self.delegate saveTimerDuration:duration];
-    //
-    //    return;
-    //}
     
     [AWKeychainUtils storeUsername:_keychainTimerDurationUsername
                        andPassword:[NSString stringWithFormat: @"%.6f", duration]
@@ -159,10 +148,6 @@
 
 
 - (NSTimeInterval)_timerStartTime {
-    //if (!_usesKeychain &&
-    //    [self.delegate respondsToSelector:@selector(timerStartTime)]) {
-    //    return [self.delegate timerStartTime];
-    //}
     
     NSString *keychainValue =
     [AWKeychainUtils getPasswordForUsername:_keychainTimerStartUsername
@@ -174,12 +159,6 @@
 
 
 - (void)_saveTimerStartTime {
-    //if (!_usesKeychain &&
-    //    [self.delegate respondsToSelector:@selector(saveTimerStartTime)]) {
-    //    [self.delegate saveTimerStartTime];
-    //
-    //    return;
-    //}
     
     [AWKeychainUtils storeUsername:_keychainTimerStartUsername
                        andPassword:[NSString stringWithFormat: @"%.6f",
@@ -191,10 +170,6 @@
 
 
 - (BOOL)_didPasscodeTimerEnd {
-    //if (!_usesKeychain &&
-    //    [self.delegate respondsToSelector:@selector(didPasscodeTimerEnd)]) {
-    //   return [self.delegate didPasscodeTimerEnd];
-    //}
     
     NSTimeInterval now = [NSDate timeIntervalSinceReferenceDate];
     // startTime wasn't saved yet (first app use and it crashed, phone force
@@ -206,12 +181,6 @@
 
 
 - (void)_deletePasscode {
-    //if (!_usesKeychain &&
-    //    [self.delegate respondsToSelector:@selector(deletePasscode)]) {
-    //    [self.delegate deletePasscode];
-    //
-    //    return;
-    //}
     
     [AWKeychainUtils deleteItemForUsername:_keychainPasscodeUsername
                             andServiceName:_keychainServiceName
@@ -220,12 +189,6 @@
 
 
 - (void)_savePasscode:(NSString *)passcode {
-    //if (!_usesKeychain &&
-    //    [self.delegate respondsToSelector:@selector(savePasscode:)]) {
-    //    [self.delegate savePasscode:passcode];
-    //
-    //    return;
-    //}
     
     [AWKeychainUtils storeUsername:_keychainPasscodeUsername
                        andPassword:passcode
@@ -236,14 +199,19 @@
 
 
 - (NSString *)_passcode {
-    //if (!_usesKeychain &&
-    //    [self.delegate respondsToSelector:@selector(passcode)]) {
-    //    return [self.delegate passcode];
-    //}
     
     return [AWKeychainUtils getPasswordForUsername:_keychainPasscodeUsername
                                     andServiceName:_keychainServiceName
                                              error:nil];
+}
+
+- (void)_resetHandler {
+    @synchronized (self) {
+        self.passcodeVC                 = nil;
+        if(![self.passcodeWindow isHidden])
+            self.passcodeWindow.hidden  = YES;
+        self.passcodeWindow             = nil;
+    }
 }
 
 #pragma mark - Passcode view handling
@@ -252,9 +220,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName: @"passcodeViewControllerWillClose" object:self userInfo:nil];
     
     if (_passcodeWindow) {
-        _passcodeVC = nil;
-        _passcodeWindow.hidden = YES;
-        _passcodeWindow = nil;
+        [self _resetHandler];
         
         // Remove keyboard window (top window, third or more in hierachy)
         NSArray *wins = [[UIApplication sharedApplication] windows];
@@ -296,7 +262,7 @@
             }
         } else {
             // Delete from Keychain
-            if (_passcodeVC.currentOperation == PasscodeOperationRemove) {
+            if (_passcodeVC.currentOperation == PasscodeOperationDisable) {
                 [self _deletePasscode];
             }
             else {
@@ -313,15 +279,23 @@
 - (void)showLockScreenWithAnimation:(BOOL)animated {
     
     if(!_passcodeWindow) {
-        _passcodeVC = [AWPasscodeViewController new];
         
-        [_passcodeVC prepareAsLockScreen];
-        
-        _passcodeWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        _passcodeWindow.windowLevel = UIWindowLevelStatusBar;
-        [_passcodeWindow setRootViewController:_passcodeVC];
-        _passcodeWindow.backgroundColor = [UIColor clearColor];
-        [_passcodeWindow makeKeyAndVisible];
+        @synchronized (self) {
+            if(_passcodeVC)
+                _passcodeVC = nil;
+            
+            _passcodeVC = [AWPasscodeViewController new];
+            _passcodeVC.currentOperation = PasscodeOperationLocked;
+            
+            if(_passcodeWindow)
+                _passcodeWindow = nil;
+            
+            _passcodeWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+            _passcodeWindow.windowLevel = UIWindowLevelStatusBar;
+            [_passcodeWindow setRootViewController:_passcodeVC];
+            _passcodeWindow.backgroundColor = [UIColor clearColor];
+            [_passcodeWindow makeKeyAndVisible];
+        }
         
         CGPoint newCenter;
         if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeLeft) {
@@ -356,72 +330,54 @@
     }
 }
 
-/*
- - (void)_prepareNavigationControllerWithController:(UIViewController *)viewController {
- self.navigationItem.rightBarButtonItem =
- [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(_cancelAndDismissMe)];
- 
- if (!_displayedAsModal) {
- [viewController.navigationController pushViewController:self
- animated:YES];
- self.navigationItem.hidesBackButton = _hidesBackButton;
- [self rotateAccordingToStatusBarOrientationAndSupportedOrientations];
- 
- return;
- }
- UINavigationController *navController =
- [[UINavigationController alloc] initWithRootViewController:self];
- 
- // Make sure nav bar for logout is off the screen
- [self.navBar removeFromSuperview];
- self.navBar = nil;
- 
- // Customize navigation bar
- // Make sure UITextAttributeTextColor is not set to nil
- // barTintColor & translucent is only called on iOS7+
- navController.navigationBar.tintColor = self.navigationTintColor;
- if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
- navController.navigationBar.barTintColor = self.navigationBarTintColor;
- navController.navigationBar.translucent = self.navigationBarTranslucent;
- }
- if (self.navigationTitleColor) {
- navController.navigationBar.titleTextAttributes =
- @{ NSForegroundColorAttributeName : self.navigationTitleColor };
- }
- 
- [viewController presentViewController:navController
- animated:YES
- completion:nil];
- [self rotateAccordingToStatusBarOrientationAndSupportedOrientations];
- }
- 
- 
- - (void)showForEnablingPasscodeInViewController:(UIViewController *)viewController
- asModal:(BOOL)isModal {
- _displayedAsModal = isModal;
- [self _prepareForEnablingPasscode];
- [self _prepareNavigationControllerWithController:viewController];
- self.title = NSLocalizedStringFromTable(self.enablePasscodeString, _localizationTableName, @"");
- }
- 
- 
- - (void)showForChangingPasscodeInViewController:(UIViewController *)viewController
- asModal:(BOOL)isModal {
- _displayedAsModal = isModal;
- [self _prepareForChangingPasscode];
- [self _prepareNavigationControllerWithController:viewController];
- self.title = NSLocalizedStringFromTable(self.changePasscodeString, _localizationTableName, @"");
- }
- 
- 
- - (void)showForDisablingPasscodeInViewController:(UIViewController *)viewController
- asModal:(BOOL)isModal {
- _displayedAsModal = isModal;
- [self _prepareForTurningOffPasscode];
- [self _prepareNavigationControllerWithController:viewController];
- self.title = NSLocalizedStringFromTable(self.turnOffPasscodeString, _localizationTableName, @"");
- }
- */
+- (void)_addPasscodeToViewControllerInternal:(UIViewController *)viewController asModal:(BOOL)modal withState:(PasscodeOperation)operation{
+    
+    // First, capture a screenshot of the background so that the frost effect is visible all times
+    UIGraphicsBeginImageContextWithOptions(viewController.view.bounds.size, viewController.view.opaque, 0.0);
+    [viewController.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage * backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    @synchronized (self) {
+        
+        if(_passcodeVC)
+            _passcodeVC = nil;
+        
+        _passcodeVC = [AWPasscodeViewController new];
+        _passcodeVC.currentOperation = operation;
+        _passcodeVC.backgroundImage = backgroundImage;
+    }
+    
+    [_passcodeVC resetUI];
+    
+    if (!modal) {
+        [viewController.navigationController pushViewController:_passcodeVC
+                                                       animated:YES];
+        return;
+    }
+    
+    UINavigationController *navController =
+    [[UINavigationController alloc] initWithRootViewController:_passcodeVC];
+    
+    [viewController presentViewController:navController
+                                 animated:YES
+                               completion:nil];
+}
+
+- (void)displayPasscodeToEnable:(UIViewController*)viewController asModal:(BOOL)modally {
+    
+    [self _addPasscodeToViewControllerInternal:viewController asModal:modally withState:PasscodeOperationEnable];
+}
+
+- (void)displayPasscodeToChange:(UIViewController*)viewController asModal:(BOOL)modally {
+    
+    [self _addPasscodeToViewControllerInternal:viewController asModal:modally withState:PasscodeOperationChange];
+}
+
+- (void)displayPasscodeToDisable:(UIViewController*)viewController asModal:(BOOL)modally {
+    
+    [self _addPasscodeToViewControllerInternal:viewController asModal:modally withState:PasscodeOperationDisable];
+}
 
 - (void)_addObservers {
     /*[[NSNotificationCenter defaultCenter]
@@ -447,16 +403,16 @@
 }
 
 #pragma mark - Validation
-- (BOOL) validatePasscode:(NSString *)typedString {
+- (BOOL)validatePasscode:(NSString *)typedString {
     return [self _validatePasscode:typedString];
 }
 
 - (BOOL)_validatePasscode:(NSString *)typedString {
     NSString *savedPasscode = [self _passcode];
     
-    if (_passcodeVC && (_passcodeVC.currentOperation == PasscodeOperationChange  || savedPasscode.length == 0) && !_passcodeVC.currentOperation == PasscodeOperationRemove) {
+    if (_passcodeVC && (_passcodeVC.currentOperation == PasscodeOperationChange  || savedPasscode.length == 0 || !savedPasscode) && _passcodeVC.currentOperation != PasscodeOperationDisable) {
         
-        if ((_passcodeVC.currentOperation == PasscodeOperationChange || savedPasscode.length == 0) && _passcodeVC.currentOperation != PasscodeOperationChangeVerify) {
+        if ((_passcodeVC.currentOperation == PasscodeOperationChange || savedPasscode.length == 0 || !savedPasscode) && _passcodeVC.currentOperation != PasscodeOperationChangeVerify) {
             _tempPasscode = typedString;
             
             // The delay is to give time for the last bullet to appear
@@ -514,50 +470,50 @@
 
 - (void)_askForNewPasscode {
     // TODO add logic
+    _passcodeVC.currentOperation = PasscodeOperationChange;
+    [_passcodeVC resetUI];
     
     CATransition *transition = [CATransition animation];
     [transition setDelegate: self];
-    
-    
     [transition setType: kCATransitionPush];
     [transition setSubtype: kCATransitionFromRight];
     [transition setDuration: _slideAnimationDuration];
     [transition setTimingFunction:
      [CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionEaseInEaseOut]];
-    [[_passcodeVC.view layer] addAnimation: transition forKey: @"swipe"];
+    [[_passcodeVC.containerView layer] addAnimation: transition forKey: @"swipe"];
 }
 
 
 - (void)_reAskForNewPasscode {
     // TODO add logic
-    
-    
+    _passcodeVC.currentOperation = PasscodeOperationChangeVerify;
     _tempPasscode = @"";
+    [_passcodeVC resetUI];
     
     CATransition *transition = [CATransition animation];
     [transition setDelegate: self];
-    
     [transition setType: kCATransitionPush];
     [transition setSubtype: kCATransitionFromRight];
     [transition setDuration: _slideAnimationDuration];
     [transition setTimingFunction:
      [CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionEaseInEaseOut]];
-    [[_passcodeVC.view layer] addAnimation: transition forKey: @"swipe"];
+    [[_passcodeVC.containerView layer] addAnimation: transition forKey: @"swipe"];
 }
 
 
 - (void)_askForConfirmationPasscode {
     // TODO add logic
+    _passcodeVC.currentOperation = PasscodeOperationChangeVerify;
+    [_passcodeVC resetUI];
     
     CATransition *transition = [CATransition animation];
     [transition setDelegate: self];
-    
     [transition setType: kCATransitionPush];
     [transition setSubtype: kCATransitionFromRight];
     [transition setDuration: _slideAnimationDuration];
     [transition setTimingFunction:
      [CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionEaseInEaseOut]];
-    [[_passcodeVC.view layer] addAnimation: transition forKey: @"swipe"];
+    [[_passcodeVC.containerView layer] addAnimation: transition forKey: @"swipe"];
 }
 
 

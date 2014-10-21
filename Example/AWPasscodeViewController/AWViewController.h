@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AWPasscodeViewController/AWPasscodeHandler.h>
+
 
 @interface AWViewController : UIViewController
 @end
