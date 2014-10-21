@@ -70,7 +70,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.view endEditing:YES];
+    //[self.view endEditing:YES];
     
     id firstResponder = [UIResponder getCurrentFirstResponder];
     if(firstResponder)
@@ -78,7 +78,7 @@
     
 }
 
-- (void) viewDidDisappear:(BOOL)animated {
+- (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     
     // We need to keep track of the VC if added to for example a nav controller
@@ -88,7 +88,7 @@
     }
 }
 
--(void) dealloc {
+-(void)dealloc {
     
 }
 
@@ -97,7 +97,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (BOOL) shouldAutorotate {
+- (BOOL)shouldAutorotate {
     return YES;
 }
 
@@ -106,19 +106,19 @@
     return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
-- (void) _loadDefaults {
+- (void)_loadDefaults {
     [self _loadMiscDefaults];
     [self _loadGapDefaults];
     [self _loadFontDefaults];
     [self _loadColorDefaults];
 }
 
-- (void) _loadMiscDefaults {
+- (void)_loadMiscDefaults {
     _passcodeCharacter = @"\u2014"; // A longer "-";
     _localizationTableName = @"AWPasscodeViewControllerLocalization";
 }
 
-- (void) _loadGapDefaults {
+- (void)_loadGapDefaults {
     _iPadFontSizeModifier = 1.5;
     _iPhoneHorizontalGap = 40.0;
     _horizontalGap = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? _iPhoneHorizontalGap * _iPadFontSizeModifier : _iPhoneHorizontalGap;
@@ -128,7 +128,7 @@
     _passcodeOverlayHeight = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 96.0f : 40.0f;
 }
 
-- (void) _loadFontDefaults {
+- (void)_loadFontDefaults {
     _labelFontSize = 15.0;
     _passcodeFontSize = 33.0;
     _labelFont = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ?
@@ -139,7 +139,7 @@
     [UIFont fontWithName: @"AvenirNext-Regular" size: _passcodeFontSize];
 }
 
-- (void) _loadColorDefaults {
+- (void)_loadColorDefaults {
     // Backgrounds
     _backgroundColor =  [UIColor colorWithRed:0.97f green:0.97f blue:1.0f alpha:1.00f];
     _passcodeBackgroundColor = [UIColor clearColor];
@@ -154,7 +154,7 @@
 }
 
 #pragma mark - View setup
-- (void) _setupRootViews {
+- (void)_setupRootViews {
     // Create the container view
     _containerView = [UIView new];
     _containerView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -186,7 +186,7 @@
     [self addConstraints];
 }
 
-- (void) _setupLabels {
+- (void)_setupLabels {
     _mainLabel = [UILabel new];
     _mainLabel.backgroundColor = _enterPasscodeLabelBackgroundColor;
     _mainLabel.numberOfLines = 0;
@@ -213,7 +213,7 @@
     _failedLabel.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
-- (void) _setupPasscodeFields {
+- (void)_setupPasscodeFields {
     _passcodeTextField = [UITextField new];
     _passcodeTextField.userInteractionEnabled = YES;
     _passcodeTextField.delegate = self;
@@ -273,6 +273,7 @@
 - (void)_resetTextFields {
     if (![_passcodeTextField isFirstResponder])
         [_passcodeTextField becomeFirstResponder];
+    _passcodeTextField.text = @"";
     
     _firstDigitTextField.secureTextEntry = NO;
     _secondDigitTextField.secureTextEntry = NO;
@@ -531,6 +532,22 @@
     } else {
         [self.navigationController popViewControllerAnimated:animated];
     }
+}
+
+- (void)increaseFailCount:(NSUInteger)fails {
+    
+    if (fails == 1) {
+     _failedLabel.text =
+     NSLocalizedStringWithDefaultValue(@"Failed1", _localizationTableName, [NSBundle mainBundle], @"1 failed attempt", @"First failed attempt");
+     }
+     else {
+     _failedLabel.text = [NSString stringWithFormat: NSLocalizedStringWithDefaultValue(@"Failed1", _localizationTableName, [NSBundle mainBundle], @"%i failed attempts", @"Subsequent failed attempts"), fails];
+     }
+     _failedLabel.layer.cornerRadius = kFailedAttemptLabelHeight * 0.65f;
+     _failedLabel.clipsToBounds = true;
+     _failedLabel.hidden = NO;
+    
+    [self _resetTextFields];0
 }
 
 #pragma mark - Private method helpers

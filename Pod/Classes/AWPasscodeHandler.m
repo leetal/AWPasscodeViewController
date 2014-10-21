@@ -230,11 +230,24 @@
         }
         
         [[NSNotificationCenter defaultCenter] postNotificationName: @"passcodeViewControllerDidClose" object:self userInfo:nil];
+    } else if(_passcodeVC) {
+        // Displayed in a modal or another contoller
+        [_passcodeVC popToCallerAnimated:YES];
     }
 }
 
 - (void)_dismissMe {
     _failedAttempts = 0;
+    
+    // Delete from Keychain
+    if (_passcodeVC.currentOperation == PasscodeOperationDisable) {
+        [self _deletePasscode];
+    } else if(_passcodeVC.currentOperation != PasscodeOperationLocked){
+        // Update the Keychain if adding or changing passcode
+        [self _savePasscode:_tempPasscode];
+    } else {
+        [self _deletePasscode];
+    }
     
     if(_passcodeWindow) {
         
@@ -246,38 +259,26 @@
         }
         
         [UIView animateWithDuration: _lockAnimationDuration animations: ^{
-            if (_passcodeVC) {
-                
-                keyboardWindow.alpha = 0.0f;
-                
-                if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeLeft) {
-                    _passcodeVC.view.center = CGPointMake(_passcodeVC.view.center.x * -1.f, _passcodeVC.view.center.y);
-                }
-                else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeRight) {
-                    _passcodeVC.view.center = CGPointMake(_passcodeVC.view.center.x * 2.f, _passcodeVC.view.center.y);
-                }
-                else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortrait) {
-                    _passcodeVC.view.center = CGPointMake(_passcodeVC.view.center.x, _passcodeVC.view.center.y * -1.f);
-                }
-                else {
-                    _passcodeVC.view.center = CGPointMake(_passcodeVC.view.center.x, _passcodeVC.view.center.y * 2.f);
-                }
-            } else {
-                // Delete from Keychain
-                if (_passcodeVC.currentOperation == PasscodeOperationDisable) {
-                    [self _deletePasscode];
-                }
-                else {
-                    // Update the Keychain if adding or changing passcode
-                    [self _savePasscode:_tempPasscode];
-                }
+            
+            keyboardWindow.alpha = 0.0f;
+            
+            if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeLeft) {
+                _passcodeVC.view.center = CGPointMake(_passcodeVC.view.center.x * -1.f, _passcodeVC.view.center.y);
+            }
+            else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeRight) {
+                _passcodeVC.view.center = CGPointMake(_passcodeVC.view.center.x * 2.f, _passcodeVC.view.center.y);
+            }
+            else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortrait) {
+                _passcodeVC.view.center = CGPointMake(_passcodeVC.view.center.x, _passcodeVC.view.center.y * -1.f);
+            }
+            else {
+                _passcodeVC.view.center = CGPointMake(_passcodeVC.view.center.x, _passcodeVC.view.center.y * 2.f);
             }
         } completion: ^(BOOL finished) {
             [self _cancelAndDismissMe];
         }];
     } else {
-        // Displayed in a modal or another contoller
-        [_passcodeVC popToCallerAnimated:YES];
+        [self _cancelAndDismissMe];
     }
 }
 
@@ -525,6 +526,8 @@
     
     _failedAttempts++;
     
+    [_passcodeVC increaseFailCount:_failedAttempts];
+    
     if (_maxNumberOfAllowedFailedAttempts > 0 &&
         _failedAttempts == _maxNumberOfAllowedFailedAttempts) {
         [[NSNotificationCenter defaultCenter] postNotificationName: @"maxNumberOfFailedAttemptsReached" object:self userInfo:nil];
@@ -533,20 +536,6 @@
         [self _dismissMe];
         return;
     }
-    
-    // TODO add logic in passcodeVC
-    
-    /*if (_failedAttempts == 1) {
-     _failedAttemptLabel.text =
-     NSLocalizedStringFromTable(@"1 Passcode Failed Attempt", _localizationTableName, @"");
-     }
-     else {
-     _failedAttemptLabel.text = [NSString stringWithFormat: NSLocalizedStringFromTable(@"%i Passcode Failed Attempts", _localizationTableName, @""), _failedAttempts];
-     }
-     _failedAttemptLabel.layer.cornerRadius = kFailedAttemptLabelHeight * 0.65f;
-     _failedAttemptLabel.clipsToBounds = true;
-     _failedAttemptLabel.hidden = NO;
-     */
 }
 
 
