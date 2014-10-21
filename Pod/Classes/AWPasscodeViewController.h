@@ -104,5 +104,6 @@ typedef NS_ENUM(NSInteger, PasscodeOperation) {
 - (UIView*)containerView;
 - (UIView*)passcodeEntryView;
 - (void)resetUI;
+- (void)popToCallerAnimated:(BOOL)animated;
 
 @end

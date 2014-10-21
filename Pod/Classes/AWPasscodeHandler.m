@@ -236,43 +236,49 @@
 - (void)_dismissMe {
     _failedAttempts = 0;
     
-    //Find keyboard window so we can fade it away
-    NSArray *wins = [[UIApplication sharedApplication] windows];
-    UIWindow *keyboardWindow = nil;
-    if ([wins count] > 1) {
-        keyboardWindow = [wins lastObject];
-    }
-    
-    [UIView animateWithDuration: _lockAnimationDuration animations: ^{
-        if (_passcodeVC) {
-            
-            keyboardWindow.alpha = 0.0f;
-            
-            if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeLeft) {
-                _passcodeVC.view.center = CGPointMake(_passcodeVC.view.center.x * -1.f, _passcodeVC.view.center.y);
-            }
-            else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeRight) {
-                _passcodeVC.view.center = CGPointMake(_passcodeVC.view.center.x * 2.f, _passcodeVC.view.center.y);
-            }
-            else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortrait) {
-                _passcodeVC.view.center = CGPointMake(_passcodeVC.view.center.x, _passcodeVC.view.center.y * -1.f);
-            }
-            else {
-                _passcodeVC.view.center = CGPointMake(_passcodeVC.view.center.x, _passcodeVC.view.center.y * 2.f);
-            }
-        } else {
-            // Delete from Keychain
-            if (_passcodeVC.currentOperation == PasscodeOperationDisable) {
-                [self _deletePasscode];
-            }
-            else {
-                // Update the Keychain if adding or changing passcode
-                [self _savePasscode:_tempPasscode];
-            }
+    if(_passcodeWindow) {
+        
+        //Find keyboard window so we can fade it away
+        NSArray *wins = [[UIApplication sharedApplication] windows];
+        UIWindow *keyboardWindow = nil;
+        if ([wins count] > 1) {
+            keyboardWindow = [wins lastObject];
         }
-    } completion: ^(BOOL finished) {
-        [self _cancelAndDismissMe];
-    }];
+        
+        [UIView animateWithDuration: _lockAnimationDuration animations: ^{
+            if (_passcodeVC) {
+                
+                keyboardWindow.alpha = 0.0f;
+                
+                if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeLeft) {
+                    _passcodeVC.view.center = CGPointMake(_passcodeVC.view.center.x * -1.f, _passcodeVC.view.center.y);
+                }
+                else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeRight) {
+                    _passcodeVC.view.center = CGPointMake(_passcodeVC.view.center.x * 2.f, _passcodeVC.view.center.y);
+                }
+                else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortrait) {
+                    _passcodeVC.view.center = CGPointMake(_passcodeVC.view.center.x, _passcodeVC.view.center.y * -1.f);
+                }
+                else {
+                    _passcodeVC.view.center = CGPointMake(_passcodeVC.view.center.x, _passcodeVC.view.center.y * 2.f);
+                }
+            } else {
+                // Delete from Keychain
+                if (_passcodeVC.currentOperation == PasscodeOperationDisable) {
+                    [self _deletePasscode];
+                }
+                else {
+                    // Update the Keychain if adding or changing passcode
+                    [self _savePasscode:_tempPasscode];
+                }
+            }
+        } completion: ^(BOOL finished) {
+            [self _cancelAndDismissMe];
+        }];
+    } else {
+        // Displayed in a modal or another contoller
+        [_passcodeVC popToCallerAnimated:YES];
+    }
 }
 
 #pragma mark - Displaying
@@ -348,8 +354,6 @@
         _passcodeVC.backgroundImage = backgroundImage;
     }
     
-    [_passcodeVC resetUI];
-    
     if (!modal) {
         [viewController.navigationController pushViewController:_passcodeVC
                                                        animated:YES];
@@ -421,7 +425,7 @@
                        afterDelay:0.15f];
         }
         // User entered his Passcode correctly and we are at the confirming screen.
-        else if (_passcodeVC.currentOperation != PasscodeOperationChangeVerify) {
+        else if (_passcodeVC.currentOperation == PasscodeOperationChangeVerify) {
             // User entered the confirmation Passcode correctly
             if ([typedString isEqualToString: _tempPasscode]) {
                 [self _dismissMe];

@@ -8,6 +8,7 @@
 
 #import "AWPasscodeViewController.h"
 #import "AWPasscodeHandler.h"
+#import "UIResponder+FirstResponder.h"
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
 #define kPasscodeCharWidth [_passcodeCharacter sizeWithAttributes: @{NSFontAttributeName : _passcodeFont}].width
@@ -64,26 +65,31 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [_passcodeTextField resignFirstResponder];
-
     [_passcodeTextField becomeFirstResponder];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [self.view endEditing:YES];
+    
+    id firstResponder = [UIResponder getCurrentFirstResponder];
+    if(firstResponder)
+        [firstResponder resignFirstResponder];
+    
+}
+
+- (void) viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     
     // We need to keep track of the VC if added to for example a nav controller
     if (self.isMovingFromParentViewController || self.isBeingDismissed) {
         // We need to release the strong reference in the Passcodehandler
         [AWPasscodeHandler resetHandler];
-        [_passcodeTextField resignFirstResponder];
     }
-    [self.view endEditing:YES];
 }
 
 -(void) dealloc {
-    _passcodeTextField.delegate = nil;
-    _passcodeTextField = nil;
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -216,8 +222,7 @@
     _passcodeTextField.hidden = YES;
     _passcodeTextField.enabled = YES;
     _passcodeTextField.keyboardType = UIKeyboardTypeNumberPad;
-    [_passcodeEntryView addSubview:_passcodeTextField];
-    [_passcodeTextField becomeFirstResponder];
+    [self.view addSubview:_passcodeTextField];
     
     _firstDigitTextField = [self _makeDigitField];
     [_passcodeEntryView addSubview:_firstDigitTextField];
@@ -289,7 +294,7 @@
             break;
         case PasscodeOperationChangeVerify:
         {
-            _mainLabel.text = NSLocalizedStringWithDefaultValue(@"ReEnter", _localizationTableName, [NSBundle mainBundle], @"Re-enterthe Passcode", @"Re-entered passcode");
+            _mainLabel.text = NSLocalizedStringWithDefaultValue(@"ReEnter", _localizationTableName, [NSBundle mainBundle], @"Re-enter the Passcode", @"Re-entered passcode");
         }
             break;
         case PasscodeOperationDisable:
@@ -345,7 +350,7 @@
                                        toItem: self.mainLabel
                                        attribute: NSLayoutAttributeBottom
                                        multiplier: 1.0f
-                                       constant: _verticalGap]];
+                                       constant: 1.0f]];
     
     // MainLabel
     [_containerView addConstraint:[NSLayoutConstraint
@@ -514,8 +519,24 @@
 - (UIView*)containerView {
     return _containerView;
 }
+
 - (UIView*)passcodeEntryView {
     return _passcodeEntryView;
 }
 
+#pragma mark - Public methods
+- (void)popToCallerAnimated:(BOOL)animated {
+    if([self isModal]) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        [self.navigationController popViewControllerAnimated:animated];
+    }
+}
+
+#pragma mark - Private method helpers
+- (BOOL)isModal {
+    return self.presentingViewController.presentedViewController == self
+    || self.navigationController.presentingViewController.presentedViewController == self.navigationController
+    || [self.tabBarController.presentingViewController isKindOfClass:[UITabBarController class]];
+}
 @end
