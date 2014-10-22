@@ -245,8 +245,6 @@
     } else if(_passcodeVC.currentOperation != PasscodeOperationLocked){
         // Update the Keychain if adding or changing passcode
         [self _savePasscode:_tempPasscode];
-    } else {
-        [self _deletePasscode];
     }
     
     if(_passcodeWindow) {
@@ -530,11 +528,15 @@
     
     if (_maxNumberOfAllowedFailedAttempts > 0 &&
         _failedAttempts == _maxNumberOfAllowedFailedAttempts) {
-        [[NSNotificationCenter defaultCenter] postNotificationName: @"maxNumberOfFailedAttemptsReached" object:self userInfo:nil];
-        _failedAttempts = 0;
         
+        // Notify about the fail
+        [[NSNotificationCenter defaultCenter] postNotificationName: @"maxNumberOfFailedAttemptsReached" object:self userInfo:nil];
+        
+        // Set operation to disable
+        _passcodeVC.currentOperation = PasscodeOperationDisable;
+        
+        // Dismiss the passcode VC
         [self _dismissMe];
-        return;
     }
 }
 

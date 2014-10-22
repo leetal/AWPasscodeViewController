@@ -18,7 +18,6 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     AWViewController *testVC = [[AWViewController alloc] init];
-    testVC.title = nil;
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController: testVC];
     
     self.window.rootViewController = navController;

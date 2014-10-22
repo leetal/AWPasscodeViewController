@@ -16,10 +16,11 @@
 #define kFailedAttemptLabelHeight [_failedLabel.text sizeWithAttributes: @{NSFontAttributeName : _labelFont}].height
 #define kEnterPasscodeLabelWidth [_mainLabel.text sizeWithAttributes: @{NSFontAttributeName : _labelFont}].width
 #else
+// Thanks to Kent Nguyen - https://github.com/kentnguyen
 #define kPasscodeCharWidth [_passcodeCharacter sizeWithFont:_passcodeFont].width
-#define kFailedAttemptLabelWidth (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? [_failedAttemptLabel.text sizeWithFont:_labelFont].width + 60.0f : [_failedAttemptLabel.text sizeWithFont:_labelFont].width + 20.0f)
-#define kFailedAttemptLabelHeight [_failedAttemptLabel.text sizeWithFont:_labelFont].height
-#define kEnterPasscodeLabelWidth [_enterPasscodeLabel.text sizeWithFont:_labelFont].width
+#define kFailedAttemptLabelWidth (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? [_failedLabel.text sizeWithFont:_labelFont].width + 60.0f : [_failedLabel.text sizeWithFont:_labelFont].width + 20.0f)
+#define kFailedAttemptLabelHeight [_failedLabel.text sizeWithFont:_labelFont].height
+#define kEnterPasscodeLabelWidth [_mainLabel.text sizeWithFont:_labelFont].width
 #endif
 
 @interface AWPasscodeViewController ()
@@ -53,6 +54,12 @@
         self.view.backgroundColor = _backgroundColor;
     } else {
         self.view.backgroundColor = [UIColor clearColor];
+    }
+    
+    if([self _isModal]) {
+        [self.navigationItem setHidesBackButton:TRUE];
+        UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(_back)];
+        [self.navigationItem setLeftBarButtonItem:leftBarButton];
     }
     
     [self _setupRootViews];
@@ -104,6 +111,10 @@
 - (NSUInteger)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
+- (void)_back {
+    [self popToCallerAnimated:YES];
 }
 
 - (void)_loadDefaults {
@@ -318,7 +329,7 @@
             // Should not come here
         }
             break;
-            default:
+        default:
             break;
     }
 }
@@ -337,139 +348,139 @@
     
     // Passcode entry view
     [self.view addConstraint:[NSLayoutConstraint
-                                       constraintWithItem: _passcodeEntryView
-                                       attribute: NSLayoutAttributeLeft
-                                       relatedBy: NSLayoutRelationEqual
-                                       toItem:self.view
-                                       attribute: NSLayoutAttributeCenterX
-                                       multiplier: 1.0f
-                                       constant: 1.0f]];
+                              constraintWithItem: _passcodeEntryView
+                              attribute: NSLayoutAttributeLeft
+                              relatedBy: NSLayoutRelationEqual
+                              toItem:self.view
+                              attribute: NSLayoutAttributeCenterX
+                              multiplier: 1.0f
+                              constant: 1.0f]];
     [self.view addConstraint:[NSLayoutConstraint
-                                       constraintWithItem: _passcodeEntryView
-                                       attribute: NSLayoutAttributeCenterY
-                                       relatedBy: NSLayoutRelationEqual
-                                       toItem: self.mainLabel
-                                       attribute: NSLayoutAttributeBottom
-                                       multiplier: 1.0f
-                                       constant: 1.0f]];
+                              constraintWithItem: _passcodeEntryView
+                              attribute: NSLayoutAttributeCenterY
+                              relatedBy: NSLayoutRelationEqual
+                              toItem: self.mainLabel
+                              attribute: NSLayoutAttributeBottom
+                              multiplier: 1.0f
+                              constant: 1.0f]];
     
     // MainLabel
     [_containerView addConstraint:[NSLayoutConstraint
-                              constraintWithItem:self.mainLabel
-                              attribute:NSLayoutAttributeCenterX
-                              relatedBy:NSLayoutRelationEqual
-                              toItem:_containerView
-                              attribute:NSLayoutAttributeCenterX
-                              multiplier:1.0
-                              constant:0.0f]];
+                                   constraintWithItem:self.mainLabel
+                                   attribute:NSLayoutAttributeCenterX
+                                   relatedBy:NSLayoutRelationEqual
+                                   toItem:_containerView
+                                   attribute:NSLayoutAttributeCenterX
+                                   multiplier:1.0
+                                   constant:0.0f]];
     [_containerView addConstraint:[NSLayoutConstraint
-                              constraintWithItem:self.mainLabel
-                              attribute:NSLayoutAttributeCenterY
-                              relatedBy:NSLayoutRelationEqual
-                              toItem:_containerView
-                              attribute:NSLayoutAttributeCenterY
-                              multiplier:1.0
-                              constant:-self.view.frame.size.height*0.2]];
+                                   constraintWithItem:self.mainLabel
+                                   attribute:NSLayoutAttributeCenterY
+                                   relatedBy:NSLayoutRelationEqual
+                                   toItem:_containerView
+                                   attribute:NSLayoutAttributeCenterY
+                                   multiplier:1.0
+                                   constant:-self.view.frame.size.height*0.2]];
     
     // Digit fields
     [_passcodeEntryView addConstraint:[NSLayoutConstraint
-                              constraintWithItem: _firstDigitTextField
-                              attribute: NSLayoutAttributeLeft
-                              relatedBy: NSLayoutRelationEqual
-                              toItem:_passcodeEntryView
-                              attribute: NSLayoutAttributeCenterX
-                              multiplier: 1.0f
-                              constant: - _horizontalGap * 1.5f - 2.0f]];
+                                       constraintWithItem: _firstDigitTextField
+                                       attribute: NSLayoutAttributeLeft
+                                       relatedBy: NSLayoutRelationEqual
+                                       toItem:_passcodeEntryView
+                                       attribute: NSLayoutAttributeCenterX
+                                       multiplier: 1.0f
+                                       constant: - _horizontalGap * 1.5f - 2.0f]];
     [_passcodeEntryView addConstraint:[NSLayoutConstraint
-                              constraintWithItem: _secondDigitTextField
-                              attribute: NSLayoutAttributeLeft
-                              relatedBy: NSLayoutRelationEqual
-                              toItem:_passcodeEntryView
-                              attribute: NSLayoutAttributeCenterX
-                              multiplier: 1.0f
-                              constant: - _horizontalGap * 2/3 - 2.0f]];
+                                       constraintWithItem: _secondDigitTextField
+                                       attribute: NSLayoutAttributeLeft
+                                       relatedBy: NSLayoutRelationEqual
+                                       toItem:_passcodeEntryView
+                                       attribute: NSLayoutAttributeCenterX
+                                       multiplier: 1.0f
+                                       constant: - _horizontalGap * 2/3 - 2.0f]];
     [_passcodeEntryView addConstraint:[NSLayoutConstraint
-                              constraintWithItem: _thirdDigitTextField
-                              attribute: NSLayoutAttributeLeft
-                              relatedBy: NSLayoutRelationEqual
-                              toItem: _passcodeEntryView
-                              attribute: NSLayoutAttributeCenterX
-                              multiplier: 1.0f
-                              constant: _horizontalGap * 1/6 - 2.0f]];
+                                       constraintWithItem: _thirdDigitTextField
+                                       attribute: NSLayoutAttributeLeft
+                                       relatedBy: NSLayoutRelationEqual
+                                       toItem: _passcodeEntryView
+                                       attribute: NSLayoutAttributeCenterX
+                                       multiplier: 1.0f
+                                       constant: _horizontalGap * 1/6 - 2.0f]];
     [_passcodeEntryView addConstraint:[NSLayoutConstraint
-                              constraintWithItem: _fourthDigitTextField
-                              attribute: NSLayoutAttributeLeft
-                              relatedBy: NSLayoutRelationEqual
-                              toItem: _passcodeEntryView
-                              attribute: NSLayoutAttributeCenterX
-                              multiplier: 1.0f
-                              constant: _horizontalGap - 2.0f]];
+                                       constraintWithItem: _fourthDigitTextField
+                                       attribute: NSLayoutAttributeLeft
+                                       relatedBy: NSLayoutRelationEqual
+                                       toItem: _passcodeEntryView
+                                       attribute: NSLayoutAttributeCenterX
+                                       multiplier: 1.0f
+                                       constant: _horizontalGap - 2.0f]];
     
     [_passcodeEntryView addConstraint:[NSLayoutConstraint
-                              constraintWithItem: _firstDigitTextField
-                              attribute: NSLayoutAttributeCenterY
-                              relatedBy: NSLayoutRelationEqual
-                              toItem: _passcodeEntryView
-                              attribute: NSLayoutAttributeBottom
-                              multiplier: 1.0f
-                              constant: _verticalGap]];
+                                       constraintWithItem: _firstDigitTextField
+                                       attribute: NSLayoutAttributeCenterY
+                                       relatedBy: NSLayoutRelationEqual
+                                       toItem: _passcodeEntryView
+                                       attribute: NSLayoutAttributeBottom
+                                       multiplier: 1.0f
+                                       constant: _verticalGap]];
     [_passcodeEntryView addConstraint:[NSLayoutConstraint
-                              constraintWithItem: _secondDigitTextField
-                              attribute: NSLayoutAttributeCenterY
-                              relatedBy: NSLayoutRelationEqual
-                              toItem: _passcodeEntryView
-                              attribute: NSLayoutAttributeBottom
-                              multiplier: 1.0f
-                              constant: _verticalGap]];
+                                       constraintWithItem: _secondDigitTextField
+                                       attribute: NSLayoutAttributeCenterY
+                                       relatedBy: NSLayoutRelationEqual
+                                       toItem: _passcodeEntryView
+                                       attribute: NSLayoutAttributeBottom
+                                       multiplier: 1.0f
+                                       constant: _verticalGap]];
     [_passcodeEntryView addConstraint:[NSLayoutConstraint
-                              constraintWithItem: _thirdDigitTextField
-                              attribute: NSLayoutAttributeCenterY
-                              relatedBy: NSLayoutRelationEqual
-                              toItem: _passcodeEntryView
-                              attribute: NSLayoutAttributeBottom
-                              multiplier: 1.0f
-                              constant: _verticalGap]];
+                                       constraintWithItem: _thirdDigitTextField
+                                       attribute: NSLayoutAttributeCenterY
+                                       relatedBy: NSLayoutRelationEqual
+                                       toItem: _passcodeEntryView
+                                       attribute: NSLayoutAttributeBottom
+                                       multiplier: 1.0f
+                                       constant: _verticalGap]];
     [_passcodeEntryView addConstraint:[NSLayoutConstraint
-                              constraintWithItem: _fourthDigitTextField
-                              attribute: NSLayoutAttributeCenterY
-                              relatedBy: NSLayoutRelationEqual
-                              toItem: _passcodeEntryView
-                              attribute: NSLayoutAttributeBottom
-                              multiplier: 1.0f
-                              constant: _verticalGap]];
+                                       constraintWithItem: _fourthDigitTextField
+                                       attribute: NSLayoutAttributeCenterY
+                                       relatedBy: NSLayoutRelationEqual
+                                       toItem: _passcodeEntryView
+                                       attribute: NSLayoutAttributeBottom
+                                       multiplier: 1.0f
+                                       constant: _verticalGap]];
     
     [_containerView addConstraint:[NSLayoutConstraint
-                              constraintWithItem: _failedLabel
-                              attribute: NSLayoutAttributeCenterX
-                              relatedBy: NSLayoutRelationEqual
-                              toItem: _containerView
-                              attribute: NSLayoutAttributeCenterX
-                              multiplier: 1.0f
-                              constant: 0.0f]];
+                                   constraintWithItem: _failedLabel
+                                   attribute: NSLayoutAttributeCenterX
+                                   relatedBy: NSLayoutRelationEqual
+                                   toItem: _containerView
+                                   attribute: NSLayoutAttributeCenterX
+                                   multiplier: 1.0f
+                                   constant: 0.0f]];
     [_containerView addConstraint:[NSLayoutConstraint
-                              constraintWithItem: _failedLabel
-                              attribute: NSLayoutAttributeCenterY
-                              relatedBy: NSLayoutRelationEqual
-                              toItem: _mainLabel
-                              attribute: NSLayoutAttributeBottom
-                              multiplier: 1.0f
-                              constant: _failedAttemptLabelGap]];
+                                   constraintWithItem: _failedLabel
+                                   attribute: NSLayoutAttributeCenterY
+                                   relatedBy: NSLayoutRelationEqual
+                                   toItem: _mainLabel
+                                   attribute: NSLayoutAttributeBottom
+                                   multiplier: 1.0f
+                                   constant: _failedAttemptLabelGap]];
     [_containerView addConstraint:[NSLayoutConstraint
-                              constraintWithItem: _failedLabel
-                              attribute: NSLayoutAttributeWidth
-                              relatedBy: NSLayoutRelationGreaterThanOrEqual
-                              toItem: nil
-                              attribute: NSLayoutAttributeNotAnAttribute
-                              multiplier: 1.0f
-                              constant: kFailedAttemptLabelWidth]];
+                                   constraintWithItem: _failedLabel
+                                   attribute: NSLayoutAttributeWidth
+                                   relatedBy: NSLayoutRelationGreaterThanOrEqual
+                                   toItem: nil
+                                   attribute: NSLayoutAttributeNotAnAttribute
+                                   multiplier: 1.0f
+                                   constant: kFailedAttemptLabelWidth]];
     [_containerView addConstraint:[NSLayoutConstraint
-                              constraintWithItem: _failedLabel
-                              attribute: NSLayoutAttributeHeight
-                              relatedBy: NSLayoutRelationEqual
-                              toItem: nil
-                              attribute: NSLayoutAttributeNotAnAttribute
-                              multiplier: 1.0f
-                              constant: kFailedAttemptLabelHeight + 6.0f]];
+                                   constraintWithItem: _failedLabel
+                                   attribute: NSLayoutAttributeHeight
+                                   relatedBy: NSLayoutRelationEqual
+                                   toItem: nil
+                                   attribute: NSLayoutAttributeNotAnAttribute
+                                   multiplier: 1.0f
+                                   constant: kFailedAttemptLabelHeight + 6.0f]];
 }
 
 - (void)updateViewConstraints {
@@ -527,8 +538,10 @@
 
 #pragma mark - Public methods
 - (void)popToCallerAnimated:(BOOL)animated {
-    if([self isModal]) {
-        [self dismissViewControllerAnimated:YES completion:nil];
+    [_passcodeTextField resignFirstResponder];
+    
+    if([self _isModal]) {
+        [self dismissViewControllerAnimated:animated completion:nil];
     } else {
         [self.navigationController popViewControllerAnimated:animated];
     }
@@ -537,21 +550,21 @@
 - (void)increaseFailCount:(NSUInteger)fails {
     
     if (fails == 1) {
-     _failedLabel.text =
-     NSLocalizedStringWithDefaultValue(@"Failed1", _localizationTableName, [NSBundle mainBundle], @"1 failed attempt", @"First failed attempt");
-     }
-     else {
-     _failedLabel.text = [NSString stringWithFormat: NSLocalizedStringWithDefaultValue(@"Failed1", _localizationTableName, [NSBundle mainBundle], @"%i failed attempts", @"Subsequent failed attempts"), fails];
-     }
-     _failedLabel.layer.cornerRadius = kFailedAttemptLabelHeight * 0.65f;
-     _failedLabel.clipsToBounds = true;
-     _failedLabel.hidden = NO;
+        _failedLabel.text =
+        NSLocalizedStringWithDefaultValue(@"Failed1", _localizationTableName, [NSBundle mainBundle], @"1 failed attempt", @"First failed attempt");
+    }
+    else {
+        _failedLabel.text = [NSString stringWithFormat: NSLocalizedStringWithDefaultValue(@"Failed1", _localizationTableName, [NSBundle mainBundle], @"%i failed attempts", @"Subsequent failed attempts"), fails];
+    }
+    _failedLabel.layer.cornerRadius = kFailedAttemptLabelHeight * 0.65f;
+    _failedLabel.clipsToBounds = true;
+    _failedLabel.hidden = NO;
     
-    [self _resetTextFields];0
+    [self _resetTextFields];
 }
 
 #pragma mark - Private method helpers
-- (BOOL)isModal {
+- (BOOL)_isModal {
     return self.presentingViewController.presentedViewController == self
     || self.navigationController.presentingViewController.presentedViewController == self.navigationController
     || [self.tabBarController.presentingViewController isKindOfClass:[UITabBarController class]];
