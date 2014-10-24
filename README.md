@@ -1,6 +1,6 @@
 # AWPasscodeViewController
 
-[![CI Status](http://img.shields.io/travis/Alexander Widerberg/AWPasscodeViewController.svg?style=flat)](https://travis-ci.org/Alexander Widerberg/AWPasscodeViewController)
+[![CI Status](http://img.shields.io/travis/leetal/AWPasscodeViewController.svg?style=flat)](https://travis-ci.org/leetal/AWPasscodeViewController)
 [![Version](https://img.shields.io/cocoapods/v/AWPasscodeViewController.svg?style=flat)](http://cocoadocs.org/docsets/AWPasscodeViewController)
 [![License](https://img.shields.io/cocoapods/l/AWPasscodeViewController.svg?style=flat)](http://cocoadocs.org/docsets/AWPasscodeViewController)
 [![Platform](https://img.shields.io/cocoapods/p/AWPasscodeViewController.svg?style=flat)](http://cocoadocs.org/docsets/AWPasscodeViewController)
@@ -16,7 +16,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 AWPasscodeViewController is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
-    pod "AWPasscodeViewController"
+    pod 'AWPasscodeViewController'
 
 ## Author
 
