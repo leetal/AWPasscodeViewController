@@ -9,19 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "AWPasscodeViewController.h"
 
+#define AW_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define AW_SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+
 @interface AWPasscodeHandler : NSObject
 /**
  @brief  Returns the shared instance of the passcode handler.
  */
 + (AWPasscodeHandler *)sharedHandler;
 /**
- @brief The window holding a reference to AWPAsscodeViewController
+ @brief The (weak) view controller AWPAsscodeViewController
  */
-@property (nonatomic, strong) UIWindow  *passcodeWindow;
-/**
- @brief The view controller AWPAsscodeViewController
- */
-@property (nonatomic, strong) AWPasscodeViewController *passcodeVC;
+@property (nonatomic, weak) AWPasscodeViewController *w_passcodeVC;
 /**
  @brief The string to be used as username for the passcode in the Keychain.
  */
@@ -47,16 +46,29 @@
  */
 @property (nonatomic, assign) CGFloat   slideAnimationDuration;
 /**
+ @brief Use Touch ID (@c YES) or not (@c NO). Default is @c YES.
+ */
+@property (nonatomic, assign) BOOL useTouchID;
+/**
  @brief Use keychain or not.
  */
 @property (nonatomic, assign) BOOL   usesKeychain;
+/**
+ @brief Displayed as lockscreen or not.
+ */
+@property (nonatomic, assign) BOOL   isDisplayedAsLockscreen;
 /**
  @brief The maximum number of failed attempts allowed.
  */
 @property (nonatomic, assign) NSInteger maxNumberOfAllowedFailedAttempts;
 /**
+ @brief  Returns a Boolean value that indicates whether a to use TouchID (@c YES) or not (@c NO).
+ @return @c YES if touchID is enabled.
+ */
++ (BOOL)useTouchID;
+/**
  @brief  Returns a Boolean value that indicates whether a passcode exists (@c YES) or not (@c NO).
- @return @c YES if a passcode is enabled. This also means it is enabled, unless custom logic was added to the library.
+ @return @c YES if a passcode is enabled.
  */
 + (BOOL)doesPasscodeExist;
 /**
@@ -92,15 +104,13 @@
  */
 + (void)deletePasscodeAndClose;
 /**
- @brief             Call this if you want to save and read the passcode and timers to and from somewhere else rather than the Keychain.
- @attention         All the protocol methods will fall back to the Keychain if not implemented, even if calling this method with @c NO. This allows for flexibility over what and where you save.
- @param useKeychain Set to @c NO if you want to save and read the passcode and timers to and from somewhere else rather than the Keychain. Default is @c YES.
- */
-+ (void)useKeychain:(BOOL)useKeychain;
-/**
  @brief Resets the singleton and clears any strong references that can cause problems
  */
 + (void)resetHandler;
+/**
+ @brief Adds a FROST EFFECT to any UIView
+ */
+- (UIView*)createFrostView:(UIColor*)backgroundColor;
 
 // #### Methods used to display the passcode
 - (void)showLockScreenWithAnimation:(BOOL)animated;
@@ -109,6 +119,6 @@
 - (void)displayPasscodeToDisable:(UIViewController*)viewController asModal:(BOOL)modally;
 
 // #### Validating methods
-- (BOOL)validatePasscode:(NSString *)typedString;
+- (BOOL)validatePasscode:(NSString *)typedString verifiedByTouchID:(BOOL)verified;
 
 @end

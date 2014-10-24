@@ -26,7 +26,7 @@
     
     // Add a dummy image view to show frost effect (iOS7+ only)
     UIImageView *imageV = [UIImageView new];
-    UIImage *image = [UIImage imageNamed:@"Background"];
+    UIImage *image = [UIImage imageNamed:@"img1"];
     imageV.image = image;
     imageV.contentMode = UIViewContentModeBottomLeft;
     imageV.layer.masksToBounds = YES;
@@ -38,16 +38,16 @@
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageV]|" options:0 metrics:0 views:NSDictionaryOfVariableBindings(imageV)]];
     
     // Add buttons to the view
-    _enable = [UIButton buttonWithType: UIButtonTypeSystem];
+    _enable = [UIButton buttonWithType: UIButtonTypeCustom];
     [_enable setTitle:@"Enable" forState:UIControlStateNormal];
     _enable.translatesAutoresizingMaskIntoConstraints = NO;
-    _change = [UIButton buttonWithType: UIButtonTypeSystem];
+    _change = [UIButton buttonWithType: UIButtonTypeCustom];
     [_change setTitle:@"Change" forState:UIControlStateNormal];
     _change.translatesAutoresizingMaskIntoConstraints = NO;
-    _test = [UIButton buttonWithType: UIButtonTypeSystem];
+    _test = [UIButton buttonWithType: UIButtonTypeCustom];
     [_test setTitle:@"Test" forState:UIControlStateNormal];
     _test.translatesAutoresizingMaskIntoConstraints = NO;
-    _disable = [UIButton buttonWithType: UIButtonTypeSystem];
+    _disable = [UIButton buttonWithType: UIButtonTypeCustom];
     [_disable setTitle:@"Disable" forState:UIControlStateNormal];
     _disable.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_enable];
@@ -123,7 +123,7 @@
 }
 
 - (void)disablePasscode {
-    [[AWPasscodeHandler sharedHandler] displayPasscodeToDisable:self asModal:YES];
+    [[AWPasscodeHandler sharedHandler] displayPasscodeToDisable:self asModal:NO];
 }
 
 #pragma mark - Notification handlers

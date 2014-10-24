@@ -9,125 +9,161 @@
 #import "AWPasscodeViewController.h"
 #import "AWPasscodeHandler.h"
 #import "UIResponder+FirstResponder.h"
-
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
-#define kPasscodeCharWidth [_passcodeCharacter sizeWithAttributes: @{NSFontAttributeName : _passcodeFont}].width
-#define kFailedAttemptLabelWidth (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? [_failedLabel.text sizeWithAttributes: @{NSFontAttributeName : _labelFont}].width + 60.0f : [_failedLabel.text sizeWithAttributes: @{NSFontAttributeName : _labelFont}].width + 30.0f)
-#define kFailedAttemptLabelHeight [_failedLabel.text sizeWithAttributes: @{NSFontAttributeName : _labelFont}].height
-#define kEnterPasscodeLabelWidth [_mainLabel.text sizeWithAttributes: @{NSFontAttributeName : _labelFont}].width
-#else
-// Thanks to Kent Nguyen - https://github.com/kentnguyen
-#define kPasscodeCharWidth [_passcodeCharacter sizeWithFont:_passcodeFont].width
-#define kFailedAttemptLabelWidth (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? [_failedLabel.text sizeWithFont:_labelFont].width + 60.0f : [_failedLabel.text sizeWithFont:_labelFont].width + 20.0f)
-#define kFailedAttemptLabelHeight [_failedLabel.text sizeWithFont:_labelFont].height
-#define kEnterPasscodeLabelWidth [_mainLabel.text sizeWithFont:_labelFont].width
-#endif
+#import <LocalAuthentication/LocalAuthentication.h>
 
 @interface AWPasscodeViewController ()
+@property (nonatomic, strong) UITextField   *firstDigitTextField;
+@property (nonatomic, strong) UITextField   *secondDigitTextField;
+@property (nonatomic, strong) UITextField   *thirdDigitTextField;
+@property (nonatomic, strong) UITextField   *fourthDigitTextField;
 
-//@property (nonatomic, strong) UIView      *passcodeView;
-@property (nonatomic, strong) UITextField *passcodeTextField;
-@property (nonatomic, strong) UITextField *firstDigitTextField;
-@property (nonatomic, strong) UITextField *secondDigitTextField;
-@property (nonatomic, strong) UITextField *thirdDigitTextField;
-@property (nonatomic, strong) UITextField *fourthDigitTextField;
+@property (nonatomic, strong) UILabel       *failedLabel;
+@property (nonatomic, strong) UILabel       *mainLabel;
+@property (nonatomic, strong) UIView        *containerView;
+@property (nonatomic, strong) UIView        *passcodeEntryView;
 
-@property (nonatomic, strong) UILabel     *failedLabel;
-@property (nonatomic, strong) UILabel     *mainLabel;
-@property (nonatomic, strong) UIView      *containerView;
-@property (nonatomic, strong) UIView      *passcodeEntryView;
+@property (nonatomic, strong) LAContext     *context;
 
-@property (nonatomic, strong) UIImageView *backgroundImageView;
+@property (nonatomic, strong) UIImageView   *backgroundImageView;
 
-@property (nonatomic, assign) CGFloat     modifierForBottomVerticalGap;
-@property (nonatomic, assign) CGFloat     iPadFontSizeModifier;
-@property (nonatomic, assign) CGFloat     iPhoneHorizontalGap;
+@property (nonatomic, assign) CGFloat       modifierForBottomVerticalGap;
+@property (nonatomic, assign) CGFloat       iPadFontSizeModifier;
+@property (nonatomic, assign) CGFloat       iPhoneHorizontalGap;
+
+@property (nonatomic, assign) BOOL          presentedAsModal;
+@property (nonatomic, assign) BOOL          wasHidden;
 @end
 
 @implementation AWPasscodeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self _loadDefaults];
-    // Do any additional setup after loading the view.
-    if(_backgroundColor) {
-        self.view.backgroundColor = _backgroundColor;
-    } else {
-        self.view.backgroundColor = [UIColor clearColor];
-    }
+    
+    self.view.backgroundColor = [UIColor clearColor];
+    
+    if(self.navigationController)
+        self.navigationController.navigationBar.translucent = YES;
     
     if([self _isModal]) {
+        _presentedAsModal = YES;
         [self.navigationItem setHidesBackButton:TRUE];
-        UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(_back)];
+        UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(_cancel)];
         [self.navigationItem setLeftBarButtonItem:leftBarButton];
+    }
+    
+    if(_currentOperation == PasscodeOperationLocked) {
+        _isPasscodeScreen = YES;
+        [self _touchIDInit];
+        
+        // We only need to listen to rotation events on iOS versions below 8.
+        // And only on the "Locked" view.
+        if(AW_SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+            // Subscribe to rotation events
+            [[NSNotificationCenter defaultCenter]
+             addObserver:self
+             selector:@selector(statusBarFrameOrOrientationChanged:)
+             name:UIApplicationDidChangeStatusBarOrientationNotification
+             object:nil];
+            [[NSNotificationCenter defaultCenter]
+             addObserver:self
+             selector:@selector(statusBarFrameOrOrientationChanged:)
+             name:UIApplicationDidChangeStatusBarFrameNotification
+             object:nil];
+        }
+    } else if(_currentOperation == PasscodeOperationDisable) {
+        _isPasscodeScreen = NO;
+        [self _touchIDInit];
+    } else {
+        _isPasscodeScreen = NO;
     }
     
     [self _setupRootViews];
 }
 
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
     
     [_passcodeTextField becomeFirstResponder];
 }
 
+
+- (void)viewDidAppear:(BOOL)animated {
+   
+    if (!_passcodeTextField.isFirstResponder)
+        [_passcodeTextField becomeFirstResponder];
+        // We need to make sure that we always start in the correct rotation if launched in landscape
+    if((_wasHidden || AW_SYSTEM_VERSION_LESS_THAN(@"8.0")) && _currentOperation == PasscodeOperationLocked) {
+        _wasHidden = NO;
+         [self rotateAccordingToStatusBarOrientationAndSupportedOrientations];
+        [self statusBarFrameOrOrientationChanged:nil];
+    }
+     [super viewDidAppear:animated];
+}
+
+
 - (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    //[self.view endEditing:YES];
     
+    // Will use this to make sure that the keyboard actually gets dismissed
     id firstResponder = [UIResponder getCurrentFirstResponder];
-    if(firstResponder)
+    if([firstResponder canResignFirstResponder])
         [firstResponder resignFirstResponder];
     
+    [super viewWillDisappear:animated];
+    
 }
+
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     
-    // We need to keep track of the VC if added to for example a nav controller
     if (self.isMovingFromParentViewController || self.isBeingDismissed) {
-        // We need to release the strong reference in the Passcodehandler
+        // We need to release the strong reference in the \
+        singleton to the passcode view.
         [AWPasscodeHandler resetHandler];
     }
+    
+    _wasHidden = YES;
 }
 
+
 -(void)dealloc {
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+
 - (BOOL)shouldAutorotate {
     return YES;
 }
 
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAllButUpsideDown;
-}
 
-- (void)_back {
+- (void)_cancel {
     [self popToCallerAnimated:YES];
 }
 
+
 - (void)_loadDefaults {
-    [self _loadMiscDefaults];
     [self _loadGapDefaults];
     [self _loadFontDefaults];
     [self _loadColorDefaults];
+    [self _loadMiscDefaults];
 }
+
 
 - (void)_loadMiscDefaults {
     _passcodeCharacter = @"\u2014"; // A longer "-";
+    
     _localizationTableName = @"AWPasscodeViewControllerLocalization";
 }
+
 
 - (void)_loadGapDefaults {
     _iPadFontSizeModifier = 1.5;
@@ -139,6 +175,7 @@
     _passcodeOverlayHeight = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 96.0f : 40.0f;
 }
 
+
 - (void)_loadFontDefaults {
     _labelFontSize = 15.0;
     _passcodeFontSize = 33.0;
@@ -149,6 +186,7 @@
     [UIFont fontWithName: @"AvenirNext-Regular" size: _passcodeFontSize * _iPadFontSizeModifier] :
     [UIFont fontWithName: @"AvenirNext-Regular" size: _passcodeFontSize];
 }
+
 
 - (void)_loadColorDefaults {
     // Backgrounds
@@ -164,11 +202,51 @@
     _failedAttemptLabelTextColor = [UIColor whiteColor];
 }
 
+
+#pragma mark - Touch ID
+
+- (void)_touchIDInit {
+    if (!self.context && [AWPasscodeHandler useTouchID]) {
+        self.context = [[LAContext alloc] init];
+        
+        NSError *error = nil;
+        if ([self.context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
+            if (error) {
+                // Just return. We simply can't use the touch id. SO just skip it!
+                return;
+            }
+            // Authenticate User
+            [self.context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                         localizedReason:NSLocalizedStringWithDefaultValue(@"TouchID", _localizationTableName, [NSBundle mainBundle], @"Unlock using Touch ID", @"Unlock using Touch ID")
+                                   reply:^(BOOL success, NSError *error) {
+                                       if (error) {
+                                           self.context = nil;
+                                           return;
+                                       }
+                                       if (success) {
+                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                               [self _validatePasscode:nil verifiedByTouchID:YES];
+                                           });
+                                       }
+                                       self.context = nil;
+                                   }];
+        }
+    }
+}
+
+
 #pragma mark - View setup
+
 - (void)_setupRootViews {
     // Create the container view
-    _containerView = [UIView new];
+    _containerView = [[AWPasscodeHandler sharedHandler] createFrostView:_backgroundColor];
     _containerView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(_keyboardHandler)];
+    
+    [_containerView addGestureRecognizer:tap];
     
     // Background image view
     _backgroundImageView = [UIImageView new];
@@ -179,7 +257,7 @@
     [self.view addSubview:_backgroundImageView];
     
     // Add the frost effect
-    [self addBlurToView:_containerView];
+    //[[AWPasscodeHandler sharedHandler] addBlurToView:_containerView withFallbackBackgroudColor:_backgroundColor];
     
     // Add a container for the passcode
     _passcodeEntryView = [UIView new];
@@ -196,6 +274,7 @@
     // Lastly setup the constraints for the view
     [self addConstraints];
 }
+
 
 - (void)_setupLabels {
     _mainLabel = [UILabel new];
@@ -224,6 +303,7 @@
     _failedLabel.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
+
 - (void)_setupPasscodeFields {
     _passcodeTextField = [UITextField new];
     _passcodeTextField.userInteractionEnabled = YES;
@@ -248,24 +328,6 @@
     [_passcodeEntryView addSubview:_fourthDigitTextField];
 }
 
-- (void)addBlurToView:(UIView *)view {
-    UIView *blurView = nil;
-    
-    if([UIBlurEffect class]) { // iOS 8
-        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
-        blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-        blurView.frame = view.frame;
-        
-    } else { //iOS 7
-        blurView = [[UIToolbar alloc] initWithFrame:view.bounds];
-    }
-    
-    [blurView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
-    [view addSubview:blurView];
-    [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[blurView]|" options:0 metrics:0 views:NSDictionaryOfVariableBindings(blurView)]];
-    [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[blurView]|" options:0 metrics:0 views:NSDictionaryOfVariableBindings(blurView)]];
-}
 
 - (UITextField *)_makeDigitField{
     UITextField *field = [UITextField new];
@@ -281,16 +343,44 @@
     return field;
 }
 
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+- (CGFloat)_getFailedHeight {
+    // Fetch correct sizes during runtime. Would fail if used as a define in compiletime
+    if ([_failedLabel respondsToSelector:@selector(sizeWithAttributes:)]) {
+        // iOS7+
+        return [_failedLabel.text sizeWithAttributes: @{NSFontAttributeName : _labelFont}].height;
+    } else {
+        // <iOS7
+        return [_failedLabel.text sizeWithFont:_labelFont].height;
+    }
+}
+
+
+- (CGFloat)_getFailedWidth {
+    // Fetch correct sizes during runtime. Would fail if used as a define in compiletime
+    if ([_failedLabel respondsToSelector:@selector(sizeWithAttributes:)]) {
+        // iOS7+
+        return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? [_failedLabel.text sizeWithAttributes: @{NSFontAttributeName : _labelFont}].width + 60.0f : [_failedLabel.text sizeWithAttributes: @{NSFontAttributeName : _labelFont}].width + 30.0f);
+    } else {
+        // <iOS7
+        return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? [_failedLabel.text sizeWithFont:_labelFont].width + 60.0f : [_failedLabel.text sizeWithFont:_labelFont].width + 20.0f);
+    }
+}
+#pragma GCC diagnostic pop
+
+
 - (void)_resetTextFields {
     if (![_passcodeTextField isFirstResponder])
         [_passcodeTextField becomeFirstResponder];
-    _passcodeTextField.text = @"";
-    
-    _firstDigitTextField.secureTextEntry = NO;
-    _secondDigitTextField.secureTextEntry = NO;
-    _thirdDigitTextField.secureTextEntry = NO;
-    _fourthDigitTextField.secureTextEntry = NO;
+    _firstDigitTextField.secureTextEntry    = NO;
+    _secondDigitTextField.secureTextEntry   = NO;
+    _thirdDigitTextField.secureTextEntry    = NO;
+    _fourthDigitTextField.secureTextEntry   = NO;
+    _passcodeTextField.text                 = @"";
 }
+
 
 - (void)resetUI {
     [self _resetTextFields];
@@ -307,6 +397,11 @@
         case PasscodeOperationChangeVerify:
         {
             _mainLabel.text = NSLocalizedStringWithDefaultValue(@"ReEnter", _localizationTableName, [NSBundle mainBundle], @"Re-enter the Passcode", @"Re-entered passcode");
+        }
+            break;
+        case PasscodeOperationChangeMissmatch:
+        {
+            _mainLabel.text = NSLocalizedStringWithDefaultValue(@"Missmatch", _localizationTableName, [NSBundle mainBundle], @"Passcodes missmatch.\r\nPlease enter a new Passcode", @"Missmatch. Enter new  passcode");
         }
             break;
         case PasscodeOperationDisable:
@@ -333,6 +428,7 @@
             break;
     }
 }
+
 
 - (void) addConstraints {
     
@@ -472,7 +568,7 @@
                                    toItem: nil
                                    attribute: NSLayoutAttributeNotAnAttribute
                                    multiplier: 1.0f
-                                   constant: kFailedAttemptLabelWidth]];
+                                   constant: [self _getFailedWidth]]];
     [_containerView addConstraint:[NSLayoutConstraint
                                    constraintWithItem: _failedLabel
                                    attribute: NSLayoutAttributeHeight
@@ -480,18 +576,22 @@
                                    toItem: nil
                                    attribute: NSLayoutAttributeNotAnAttribute
                                    multiplier: 1.0f
-                                   constant: kFailedAttemptLabelHeight + 6.0f]];
+                                   constant: [self _getFailedHeight] + 6.0f]];
 }
+
 
 - (void)updateViewConstraints {
     [super updateViewConstraints];
     
 }
 
+
 #pragma mark - UITextFieldDelegate
+
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
-    return NO;
+    return YES;
 }
+
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
@@ -499,6 +599,15 @@
         return NO;
     
     NSString *typedString = [textField.text stringByReplacingCharactersInRange: range withString: string];
+    
+    // Limit to Decimal chars only!
+    NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    for (int i = 0; i < [string length]; i++) {
+        unichar c = [string characterAtIndex:i];
+        if (![myCharSet characterIsMember:c]) {
+            return NO;
+        }
+    }
     
     if (typedString.length >= 1) _firstDigitTextField.secureTextEntry = YES;
     else _firstDigitTextField.secureTextEntry = NO;
@@ -511,9 +620,7 @@
     
     if (typedString.length == 4) {
         // Make the last bullet show up
-        [self performSelector: @selector(_validatePasscode:)
-                   withObject: typedString
-                   afterDelay: 0.05];
+        [self _validatePasscode:typedString verifiedByTouchID:NO];
     }
     
     if (typedString.length > 4)
@@ -523,29 +630,34 @@
     return YES;
 }
 
-- (void) _validatePasscode:(NSString*)passcode {
-    [[AWPasscodeHandler sharedHandler] validatePasscode:passcode];
-}
+
+
+
 
 #pragma mark - Getters/setters
+
 - (UIView*)containerView {
     return _containerView;
 }
+
 
 - (UIView*)passcodeEntryView {
     return _passcodeEntryView;
 }
 
+
 #pragma mark - Public methods
+
 - (void)popToCallerAnimated:(BOOL)animated {
-    [_passcodeTextField resignFirstResponder];
-    
-    if([self _isModal]) {
-        [self dismissViewControllerAnimated:animated completion:nil];
+    if(_presentedAsModal) {
+        [self dismissViewControllerAnimated:animated completion:^{
+            [AWPasscodeHandler resetHandler];
+        }];
     } else {
         [self.navigationController popViewControllerAnimated:animated];
     }
 }
+
 
 - (void)increaseFailCount:(NSUInteger)fails {
     
@@ -556,17 +668,143 @@
     else {
         _failedLabel.text = [NSString stringWithFormat: NSLocalizedStringWithDefaultValue(@"Failed1", _localizationTableName, [NSBundle mainBundle], @"%i failed attempts", @"Subsequent failed attempts"), fails];
     }
-    _failedLabel.layer.cornerRadius = kFailedAttemptLabelHeight * 0.65f;
+    _failedLabel.layer.cornerRadius = [self _getFailedHeight] * 0.65f;
     _failedLabel.clipsToBounds = true;
     _failedLabel.hidden = NO;
     
     [self _resetTextFields];
 }
 
+
 #pragma mark - Private method helpers
+
 - (BOOL)_isModal {
     return self.presentingViewController.presentedViewController == self
     || self.navigationController.presentingViewController.presentedViewController == self.navigationController
     || [self.tabBarController.presentingViewController isKindOfClass:[UITabBarController class]];
 }
+
+
+- (void)_keyboardHandler {
+    if(!_passcodeTextField.isFirstResponder) {
+        [_passcodeTextField becomeFirstResponder];
+    }
+}
+
+
+- (void)_validatePasscode:(NSString*)passcode verifiedByTouchID:(BOOL)verified {
+    [[AWPasscodeHandler sharedHandler] validatePasscode:passcode verifiedByTouchID:verified];
+}
+
+
+#pragma mark - Handling rotation
+
+- (void)setTransform:(CGAffineTransform)transform frame:(CGRect)frame {
+    if(!CGRectEqualToRect(self.view.frame, frame)) {
+        self.view.frame = frame;
+    }
+    
+    if(!CGAffineTransformEqualToTransform(self.view.transform, transform)) {
+        self.view.transform = transform;
+    }
+}
+
+
+- (void)statusBarFrameOrOrientationChanged:(NSNotification *)notification {
+    
+    [self rotateAccordingToStatusBarOrientationAndSupportedOrientations];
+    
+    if (AW_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+        _containerView.frame = self.view.frame;
+    }
+    else {
+        if (UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
+            _containerView.frame = CGRectMake(0, 0, [UIApplication sharedApplication].keyWindow.frame.size.width, [UIApplication sharedApplication].keyWindow.frame.size.height);
+        }
+        else {
+            CGRect frame = CGRectMake(0, 0, [UIApplication sharedApplication].keyWindow.frame.size.height, [UIApplication sharedApplication].keyWindow.frame.size.width);
+            _containerView.frame = frame;
+        }
+        [_containerView updateConstraints];
+        [_containerView layoutSubviews];
+    }
+}
+
+
+- (NSUInteger)supportedInterfaceOrientations {
+    if (_isPasscodeScreen)
+        return AW_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0") ? UIInterfaceOrientationMaskPortrait : UIInterfaceOrientationMaskAll;
+    return UIInterfaceOrientationMaskAll;
+}
+
+
+// Inspired by AGWindow
+- (UIInterfaceOrientation)desiredOrientation {
+    UIInterfaceOrientation statusBarOrientation =
+    [[UIApplication sharedApplication] statusBarOrientation];
+    UIInterfaceOrientationMask statusBarOrientationAsMask = UIInterfaceOrientationMaskFromOrientation(statusBarOrientation);
+    if(self.supportedInterfaceOrientations & statusBarOrientationAsMask) {
+        return statusBarOrientation;
+    }
+    else {
+        if(self.supportedInterfaceOrientations & UIInterfaceOrientationMaskPortrait) {
+            return UIInterfaceOrientationPortrait;
+        }
+        else if(self.supportedInterfaceOrientations & UIInterfaceOrientationMaskLandscapeLeft) {
+            return UIInterfaceOrientationLandscapeLeft;
+        }
+        else if(self.supportedInterfaceOrientations & UIInterfaceOrientationMaskLandscapeRight) {
+            return UIInterfaceOrientationLandscapeRight;
+        }
+        else {
+            return UIInterfaceOrientationPortraitUpsideDown;
+        }
+    }
+}
+
+
+// Inspired by AGWindow
+- (void)rotateAccordingToStatusBarOrientationAndSupportedOrientations {
+    UIInterfaceOrientation orientation = [self desiredOrientation];
+    CGFloat angle = UIInterfaceOrientationAngleOfOrientation(orientation);
+    CGAffineTransform transform = CGAffineTransformMakeRotation(angle);
+    
+    // We need to support for example split-views on iPads also and so on...
+    if(_isPasscodeScreen) {
+        // This will always cover the whole screen! (During "locked" state
+        [self setTransform: transform frame: self.view.window.bounds];
+    } else {
+        // The other views (for enabling, disabling,..) will always be shown with a parent. \
+        Therefore, use the parent's bounds instead of the window's bounds.
+        [self setTransform: transform frame: self.parentViewController.view.bounds];
+    }
+}
+
+
+UIInterfaceOrientationMask UIInterfaceOrientationMaskFromOrientation(UIInterfaceOrientation orientation) {
+    return 1 << orientation;
+}
+
+
+CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientation) {
+    CGFloat angle;
+    
+    switch (orientation) {
+        case UIInterfaceOrientationPortraitUpsideDown:
+            angle = M_PI;
+            break;
+        case UIInterfaceOrientationLandscapeLeft:
+            angle = -M_PI_2;
+            break;
+        case UIInterfaceOrientationLandscapeRight:
+            angle = M_PI_2;
+            break;
+        default:
+            angle = 0.0;
+            break;
+    }
+    
+    return angle;
+}
+
 @end

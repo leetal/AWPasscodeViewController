@@ -14,6 +14,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    [[UIButton appearance] setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [[UIButton appearance] setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     

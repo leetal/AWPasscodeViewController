@@ -13,11 +13,16 @@ typedef NS_ENUM(NSInteger, PasscodeOperation) {
     PasscodeOperationEnable,
     PasscodeOperationChange,
     PasscodeOperationChangeVerify,
+    PasscodeOperationChangeMissmatch,
     PasscodeOperationLocked,
     PasscodeOperationDisable
 };
 
 @interface AWPasscodeViewController : UIViewController <UITextFieldDelegate>
+/**
+ @brief The actual passcode field (hidden on screen)
+ */
+@property (nonatomic, strong) UITextField   *passcodeTextField;
 /**
  @brief The current ongoing operation
  */
@@ -98,6 +103,10 @@ typedef NS_ENUM(NSInteger, PasscodeOperation) {
  @brief The table name for NSLocalizedStringFromTable.
  */
 @property (nonatomic, strong) NSString  *localizationTableName;
+/**
+ @brief Boolean indicationg wheter (@c YES) or not (@c NO) the view is displayed as a passcode screen.
+ */
+@property (nonatomic, assign) BOOL  isPasscodeScreen;
 
 // ##########################################################
 
