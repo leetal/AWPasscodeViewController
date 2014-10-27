@@ -107,7 +107,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     
     // Will use this to make sure that the keyboard actually gets dismissed
-    id firstResponder = [UIResponder getCurrentFirstResponder];
+    id firstResponder = [UIResponder getCurrentFirstResponderReference];
     if([firstResponder canResignFirstResponder])
         [firstResponder resignFirstResponder];
     
@@ -311,6 +311,7 @@
     _passcodeTextField.translatesAutoresizingMaskIntoConstraints = NO;
     _passcodeTextField.hidden = YES;
     _passcodeTextField.enabled = YES;
+    _passcodeTextField.tag = 1;
     _passcodeTextField.keyboardType = UIKeyboardTypeNumberPad;
     [self.view addSubview:_passcodeTextField];
     
