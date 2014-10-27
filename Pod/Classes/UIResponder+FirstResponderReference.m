@@ -1,14 +1,14 @@
 //
-//  UIResponder+FirstResponder.m
+//  UIResponder+FirstResponderReference.m
 //  Pods
 //
-//  Created by Xcerion on 2014-10-21.
+//  Created by Alexander Widerberg on 2014-10-21.
 //
 //
 
-#import "UIResponder+FirstResponder.h"
+#import "UIResponder+FirstResponderReference.h"
 static __weak id currentFirstResponderReference;
-@implementation UIResponder (FirstResponder)
+@implementation UIResponder (FirstResponderReference)
 +(id)getCurrentFirstResponderReference {
     currentFirstResponderReference = nil;
     [[UIApplication sharedApplication] sendAction:@selector(findFirstResponder:) to:nil from:nil forEvent:nil];
