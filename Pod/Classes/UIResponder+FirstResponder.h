@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface UIResponder (FirstResponder)
-+(id)getCurrentFirstResponder;
++(id)getCurrentFirstResponderReference;
 @end
