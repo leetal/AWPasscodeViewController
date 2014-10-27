@@ -8,7 +8,7 @@
 
 #import "AWPasscodeViewController.h"
 #import "AWPasscodeHandler.h"
-#import "UIResponder+FirstResponder.h"
+#import "UIResponder+FirstResponderReference.h"
 #import <LocalAuthentication/LocalAuthentication.h>
 
 @interface AWPasscodeViewController ()
