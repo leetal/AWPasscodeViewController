@@ -160,11 +160,50 @@
     [[AWPasscodeHandler sharedHandler] _resetHandler];
 }
 
+
 + (UIView*)createFrostView:(UIColor*)backgroundColor {
     return [[AWPasscodeHandler sharedHandler] _createFrostView:backgroundColor];
 }
 
+
++ (CGFloat)getLabelHeight:(UILabel*)label andFont:(UIFont*)font {
+    return [[AWPasscodeHandler sharedHandler] _getLabelHeight:label andFont:font];
+}
+
+
++ (CGFloat)getLabelWidth:(UILabel*)label andFont:(UIFont*)font {
+    return [[AWPasscodeHandler sharedHandler] _getLabelWidth:label andFont:font];
+}
+
+
 #pragma mark - Private methods
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+- (CGFloat)_getLabelHeight:(UILabel*)label andFont:(UIFont*)font{
+    // Fetch correct sizes during runtime. Would fail if used as a define in compiletime
+    if ([label respondsToSelector:@selector(sizeWithAttributes:)]) {
+        // iOS7+
+        return [label.text sizeWithAttributes: @{NSFontAttributeName : font}].height;
+    } else {
+        // <iOS7
+        return [label.text sizeWithFont:font].height;
+    }
+}
+
+
+- (CGFloat)_getLabelWidth:(UILabel*)label andFont:(UIFont*)font{
+    // Fetch correct sizes during runtime. Would fail if used as a define in compiletime
+    if ([label respondsToSelector:@selector(sizeWithAttributes:)]) {
+        // iOS7+
+        return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? [label.text sizeWithAttributes: @{NSFontAttributeName : font}].width : [label.text sizeWithAttributes: @{NSFontAttributeName : font}].width);
+    } else {
+        // <iOS7
+        return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? [label.text sizeWithFont:font].width : [label.text sizeWithFont:font].width);
+    }
+}
+#pragma GCC diagnostic pop
+
 
 - (UIView*)_createFrostView:(UIColor*)backgroundColor {
     UIView *blurView = nil;
@@ -368,13 +407,40 @@
     _dummyView.translatesAutoresizingMaskIntoConstraints = NO;
     _dummyView.backgroundColor = [UIColor clearColor];
     
+    // Create a nice looking font indication "locked" state
+    UIFont *lockedFont = [UIFont fontWithName: @"AvenirNext-Regular" size:30];
+    UILabel *lockedLabel = [UILabel new];
+    lockedLabel.textColor = [UIColor blackColor];
+    lockedLabel.alpha = 0.6;
+    lockedLabel.font = lockedFont;
+    lockedLabel.text = NSLocalizedStringWithDefaultValue(@"Locked", _passcodeVC.localizationTableName, [NSBundle mainBundle], @"Application Locked", @"Application Locked");
+    lockedLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [_dummyView addSubview:lockedLabel];
+    
     UIWindow *currentWindow = [UIApplication sharedApplication].windows[0];
     [currentWindow addSubview: _dummyView];
     
-    //[self addBlurToView:_dummyView withFallbackBackgroudColor:[UIColor whiteColor]];
-    
     [currentWindow addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_dummyView]|" options:0 metrics:0 views:NSDictionaryOfVariableBindings(_dummyView)]];
     [currentWindow addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_dummyView]|" options:0 metrics:0 views:NSDictionaryOfVariableBindings(_dummyView)]];
+    
+    [_dummyView addConstraint:[NSLayoutConstraint constraintWithItem:lockedLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_dummyView attribute:NSLayoutAttributeCenterX multiplier:1.f constant:0.f]];
+    [_dummyView addConstraint:[NSLayoutConstraint constraintWithItem:lockedLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_dummyView attribute:NSLayoutAttributeCenterY multiplier:1.f constant:0.f]];
+    [_dummyView addConstraint:[NSLayoutConstraint
+                                   constraintWithItem: lockedLabel
+                                   attribute: NSLayoutAttributeWidth
+                                   relatedBy: NSLayoutRelationGreaterThanOrEqual
+                                   toItem: nil
+                                   attribute: NSLayoutAttributeNotAnAttribute
+                                   multiplier: 1.0f
+                                   constant: [self _getLabelWidth:lockedLabel andFont:lockedFont]]];
+    [_dummyView addConstraint:[NSLayoutConstraint
+                                   constraintWithItem: lockedLabel
+                                   attribute: NSLayoutAttributeHeight
+                                   relatedBy: NSLayoutRelationEqual
+                                   toItem: nil
+                                   attribute: NSLayoutAttributeNotAnAttribute
+                                   multiplier: 1.0f
+                                   constant: [self _getLabelHeight:lockedLabel andFont:lockedFont] + 6.0f]];
 }
 
 

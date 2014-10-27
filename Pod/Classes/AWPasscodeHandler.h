@@ -111,6 +111,14 @@
  @brief Adds a FROST EFFECT to any UIView
  */
 + (UIView*)createFrostView:(UIColor*)backgroundColor;
+/**
+ @brief Helper to get label heights
+ */
++ (CGFloat)getLabelHeight:(UILabel*)label andFont:(UIFont*)font;
+/**
+ @brief Helper to get label widths
+ */
++ (CGFloat)getLabelWidth:(UILabel*)label andFont:(UIFont*)font;
 
 // #### Methods used to display the passcode
 - (void)showLockScreenWithAnimation:(BOOL)animated;

@@ -344,33 +344,6 @@
 }
 
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-- (CGFloat)_getFailedHeight {
-    // Fetch correct sizes during runtime. Would fail if used as a define in compiletime
-    if ([_failedLabel respondsToSelector:@selector(sizeWithAttributes:)]) {
-        // iOS7+
-        return [_failedLabel.text sizeWithAttributes: @{NSFontAttributeName : _labelFont}].height;
-    } else {
-        // <iOS7
-        return [_failedLabel.text sizeWithFont:_labelFont].height;
-    }
-}
-
-
-- (CGFloat)_getFailedWidth {
-    // Fetch correct sizes during runtime. Would fail if used as a define in compiletime
-    if ([_failedLabel respondsToSelector:@selector(sizeWithAttributes:)]) {
-        // iOS7+
-        return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? [_failedLabel.text sizeWithAttributes: @{NSFontAttributeName : _labelFont}].width + 60.0f : [_failedLabel.text sizeWithAttributes: @{NSFontAttributeName : _labelFont}].width + 30.0f);
-    } else {
-        // <iOS7
-        return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? [_failedLabel.text sizeWithFont:_labelFont].width + 60.0f : [_failedLabel.text sizeWithFont:_labelFont].width + 20.0f);
-    }
-}
-#pragma GCC diagnostic pop
-
-
 - (void)_resetTextFields {
     if (![_passcodeTextField isFirstResponder])
         [_passcodeTextField becomeFirstResponder];
@@ -569,7 +542,7 @@
                                    toItem: nil
                                    attribute: NSLayoutAttributeNotAnAttribute
                                    multiplier: 1.0f
-                                   constant: [self _getFailedWidth]]];
+                                   constant: [AWPasscodeHandler getLabelWidth:_failedLabel andFont:_labelFont]]];
     [_containerView addConstraint:[NSLayoutConstraint
                                    constraintWithItem: _failedLabel
                                    attribute: NSLayoutAttributeHeight
@@ -577,7 +550,7 @@
                                    toItem: nil
                                    attribute: NSLayoutAttributeNotAnAttribute
                                    multiplier: 1.0f
-                                   constant: [self _getFailedHeight] + 6.0f]];
+                                   constant: [AWPasscodeHandler getLabelHeight:_failedLabel andFont:_labelFont] + 6.0f]];
 }
 
 
@@ -669,7 +642,7 @@
     else {
         _failedLabel.text = [NSString stringWithFormat: NSLocalizedStringWithDefaultValue(@"Failed1", _localizationTableName, [NSBundle mainBundle], @"%i failed attempts", @"Subsequent failed attempts"), fails];
     }
-    _failedLabel.layer.cornerRadius = [self _getFailedHeight] * 0.65f;
+    _failedLabel.layer.cornerRadius = [AWPasscodeHandler getLabelHeight:_failedLabel andFont:_labelFont] * 0.65f;
     _failedLabel.clipsToBounds = true;
     _failedLabel.hidden = NO;
     
