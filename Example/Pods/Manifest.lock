@@ -1,0 +1,14 @@
+PODS:
+  - AWPasscodeViewController (0.1.0)
+
+DEPENDENCIES:
+  - AWPasscodeViewController (from `../`)
+
+EXTERNAL SOURCES:
+  AWPasscodeViewController:
+    :path: ../
+
+SPEC CHECKSUMS:
+  AWPasscodeViewController: b8a1bb25e0fab7d8e63af80aea4b68c2306f9768
+
+COCOAPODS: 0.34.4
