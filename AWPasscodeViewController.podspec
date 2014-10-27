@@ -9,10 +9,10 @@
 
 Pod::Spec.new do |s|
   s.name             = "AWPasscodeViewController"
-  s.version          = "0.1.0"
+  s.version          = "1.0.0"
   s.summary          = "A simple iOS 7/8 style Passcode Lock"
   s.description      = <<-DESC
-                       Simple to use iOS 7 style Passcode - the one you get in Settings when changing your passcode.
+                       Simple to use iOS 7/8 style Passcode - the one you get in Settings when changing your passcode. Compatible from iOS 6 and onwards.
                        DESC
   s.homepage         = "https://github.com/leetal/AWPasscodeViewController"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
@@ -28,8 +28,4 @@ Pod::Spec.new do |s|
   s.resource_bundles = {
     'AWPasscodeViewController' => ['Pod/Assets/*.png']
   }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
 end
