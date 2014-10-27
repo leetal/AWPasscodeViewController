@@ -7,14 +7,14 @@
 //
 
 #import "UIResponder+FirstResponder.h"
-static __weak id currentFirstResponder;
+static __weak id currentFirstResponderReference;
 @implementation UIResponder (FirstResponder)
 +(id)getCurrentFirstResponderReference {
-    currentFirstResponder = nil;
+    currentFirstResponderReference = nil;
     [[UIApplication sharedApplication] sendAction:@selector(findFirstResponder:) to:nil from:nil forEvent:nil];
-    return currentFirstResponder;
+    return currentFirstResponderReference;
 }
 -(void)findFirstResponder:(id)sender {
-    currentFirstResponder = self;
+    currentFirstResponderReference = self;
 }
 @end
