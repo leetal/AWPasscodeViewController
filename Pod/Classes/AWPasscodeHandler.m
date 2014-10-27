@@ -683,6 +683,9 @@
     
     _failedAttempts++;
     
+    // Send notification of wrong passcode entered
+    [[NSNotificationCenter defaultCenter] postNotificationName: @"wrongPasscodeEntered" object:self userInfo:nil];
+    
     [_passcodeVC increaseFailCount:_failedAttempts];
     
     if (_maxNumberOfAllowedFailedAttempts > 0 &&
