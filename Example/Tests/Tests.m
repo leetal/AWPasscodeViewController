@@ -6,4 +6,3 @@
 //  Copyright (c) 2014 Alexander Widerberg. All rights reserved.
 //
 
-${TEST_EXAMPLE}

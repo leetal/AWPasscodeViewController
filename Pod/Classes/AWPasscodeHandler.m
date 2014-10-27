@@ -160,8 +160,13 @@
     [[AWPasscodeHandler sharedHandler] _resetHandler];
 }
 
++ (UIView*)createFrostView:(UIColor*)backgroundColor {
+    return [[AWPasscodeHandler sharedHandler] _createFrostView:backgroundColor];
+}
 
-- (UIView*)createFrostView:(UIColor*)backgroundColor {
+#pragma mark - Private methods
+
+- (UIView*)_createFrostView:(UIColor*)backgroundColor {
     UIView *blurView = nil;
     
     if([UIBlurEffect class]) { // iOS 8
@@ -184,12 +189,8 @@
     [blurView setTranslatesAutoresizingMaskIntoConstraints:NO];
     
     return blurView;
-    /*[view addSubview:blurView];
-    [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[blurView]|" options:0 metrics:0 views:NSDictionaryOfVariableBindings(blurView)]];
-    [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[blurView]|" options:0 metrics:0 views:NSDictionaryOfVariableBindings(blurView)]];*/
 }
 
-#pragma mark - Private methods
 
 - (BOOL)_doesPasscodeExist {
     return [self _passcode].length != 0;
@@ -318,6 +319,7 @@
     } else if(_passcodeVC.currentOperation != PasscodeOperationLocked){
         // Update the Keychain if adding or changing passcode
         [self _savePasscode:_tempPasscode];
+        _tempPasscode = @"";
     }
     
     if(_isDisplayedAsLockscreen) {
@@ -362,7 +364,7 @@
 
 #pragma mark - Displaying
 - (void)_showDummyView {
-    _dummyView = [self createFrostView:[UIColor whiteColor]];
+    _dummyView = [self _createFrostView:[UIColor whiteColor]];
     _dummyView.translatesAutoresizingMaskIntoConstraints = NO;
     _dummyView.backgroundColor = [UIColor clearColor];
     
@@ -464,7 +466,7 @@
 
 - (void)displayPasscodeToChange:(UIViewController*)viewController asModal:(BOOL)modally {
     
-    [self _addPasscodeToViewControllerInternal:viewController asModal:modally withState:PasscodeOperationChange];
+    [self _addPasscodeToViewControllerInternal:viewController asModal:modally withState:PasscodeOperationChangeLocked];
 }
 
 
@@ -490,66 +492,102 @@
     
     NSString *savedPasscode = [self _passcode];
     
-    if (_passcodeVC && (_passcodeVC.currentOperation == PasscodeOperationChange || _passcodeVC.currentOperation == PasscodeOperationChangeVerify
-                        || savedPasscode.length == 0 || !savedPasscode) && _passcodeVC.currentOperation != PasscodeOperationDisable) {
-        
-        if ((_passcodeVC.currentOperation == PasscodeOperationChange || savedPasscode.length == 0 || !savedPasscode) && _passcodeVC.currentOperation != PasscodeOperationChangeVerify) {
-            _tempPasscode = typedString;
-            
-            // The delay is to give time for the last bullet to appear
-            [self performSelector:@selector(_askForConfirmationPasscode)
-                       withObject:nil
-                       afterDelay:0.15f];
-        }
-        // User entered his Passcode correctly and we are at the confirming screen.
-        else if (_passcodeVC.currentOperation == PasscodeOperationChangeVerify) {
-            // User entered the confirmation Passcode correctly
-            if ([typedString isEqualToString: _tempPasscode]) {
-                [self _dismissMe];
-            }
-            // User entered the confirmation Passcode incorrectly, start over.
-            else {
-                [self performSelector:@selector(_reAskForNewPasscode)
+    if(_passcodeVC) {
+        switch (_passcodeVC.currentOperation) {
+            case PasscodeOperationNone:
+                break;
+            case PasscodeOperationEnable:
+            {
+                _tempPasscode = typedString;
+                
+                // The delay is to give time for the last bullet to appear
+                [self performSelector:@selector(_askForConfirmationPasscode)
                            withObject:nil
-                           afterDelay:_slideAnimationDuration];
+                           afterDelay:0.15f];
             }
-        }
-        // Changing Passcode and the entered Passcode is correct.
-        else if ([typedString isEqualToString:savedPasscode]){
-            [self performSelector:@selector(_askForNewPasscode)
-                       withObject:nil
-                       afterDelay:_slideAnimationDuration];
-            _failedAttempts = 0;
-        }
-        // Acting as lockscreen and the entered Passcode is incorrect.
-        else {
-            [self performSelector: @selector(_denyAccess)
-                       withObject: nil
-                       afterDelay: _slideAnimationDuration];
-            return NO;
-        }
-    }
-    // Passcode missmatch. Just start Over.
-    else if(_passcodeVC.currentOperation == PasscodeOperationChangeMissmatch) {
-        _tempPasscode = typedString;
-        
-        // The delay is to give time for the last bullet to appear
-        [self performSelector:@selector(_askForConfirmationPasscode)
-                   withObject:nil
-                   afterDelay:0.15f];
-    }
-    // App launch/Turning passcode off: Passcode OK -> dismiss, Passcode incorrect -> deny access.
-    else {
-        if ([typedString isEqualToString: savedPasscode]) {
-            [[NSNotificationCenter defaultCenter] postNotificationName: @"passcodeWasEnteredSuccessfully" object:self userInfo:nil];
-            
-            [self _dismissMe];
-        }
-        else {
-            [self performSelector: @selector(_denyAccess)
-                       withObject: nil
-                       afterDelay: _slideAnimationDuration];
-            return NO;
+                break;
+            case PasscodeOperationChange:
+            {
+                _tempPasscode = typedString;
+                
+                // The delay is to give time for the last bullet to appear
+                [self performSelector:@selector(_askForConfirmationPasscode)
+                           withObject:nil
+                           afterDelay:0.15f];
+            }
+                break;
+            case PasscodeOperationChangeLocked:
+            {
+                if ([typedString isEqualToString: savedPasscode]) {
+                    _failedAttempts = 0;
+                    // OK to change Passcode
+                    [self performSelector:@selector(_askForNewPasscode)
+                               withObject:nil
+                               afterDelay:_slideAnimationDuration];
+                } else {
+                    [self performSelector: @selector(_denyAccess)
+                               withObject: nil
+                               afterDelay: _slideAnimationDuration];
+                    return NO;
+                }
+            }
+                break;
+            case PasscodeOperationChangeVerify:
+            {
+                // User entered the confirmation Passcode correctly
+                if ([typedString isEqualToString: _tempPasscode]) {
+                    [self _dismissMe];
+                }
+                // User entered the confirmation Passcode incorrectly, start over.
+                else {
+                    [self performSelector:@selector(_reAskForNewPasscode)
+                               withObject:nil
+                               afterDelay:_slideAnimationDuration];
+                }
+            }
+                break;
+            case PasscodeOperationChangeMissmatch:
+            {
+                _tempPasscode = typedString;
+                
+                // The delay is to give time for the last bullet to appear
+                [self performSelector:@selector(_askForConfirmationPasscode)
+                           withObject:nil
+                           afterDelay:0.15f];
+            }
+                break;
+            case PasscodeOperationDisable:
+            {
+                if ([typedString isEqualToString: savedPasscode]) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName: @"passcodeWasEnteredSuccessfully" object:self userInfo:nil];
+                    
+                    [self _dismissMe];
+                }
+                else {
+                    [self performSelector: @selector(_denyAccess)
+                               withObject: nil
+                               afterDelay: _slideAnimationDuration];
+                    return NO;
+                }
+            }
+                break;
+            case PasscodeOperationLocked:
+            {
+                if ([typedString isEqualToString: savedPasscode]) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName: @"passcodeWasEnteredSuccessfully" object:self userInfo:nil];
+                    
+                    [self _dismissMe];
+                }
+                else {
+                    [self performSelector: @selector(_denyAccess)
+                               withObject: nil
+                               afterDelay: _slideAnimationDuration];
+                    return NO;
+                }
+            }
+                break;
+            default:
+                break;
         }
     }
     
@@ -594,6 +632,7 @@
 - (void)_askForNewPasscode {
     // TODO add logic
     _passcodeVC.currentOperation = PasscodeOperationChange;
+    _failedAttempts = 0;
     [_passcodeVC resetUI];
     
     CATransition *transition = [CATransition animation];

@@ -239,7 +239,7 @@
 
 - (void)_setupRootViews {
     // Create the container view
-    _containerView = [[AWPasscodeHandler sharedHandler] createFrostView:_backgroundColor];
+    _containerView = [AWPasscodeHandler createFrostView:_backgroundColor];
     _containerView.translatesAutoresizingMaskIntoConstraints = NO;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
@@ -285,8 +285,7 @@
     _mainLabel.textAlignment = NSTextAlignmentCenter;
     [_containerView addSubview: _mainLabel];
     
-    // It is also used to display the "Passcodes did not match" error message
-    // if the user fails to confirm the passcode.
+    
     _failedLabel = [UILabel new];
     _failedLabel.text = @"1 Passcode Failed Attempt";
     _failedLabel.numberOfLines = 0;
@@ -297,7 +296,7 @@
     _failedLabel.textAlignment = NSTextAlignmentCenter;
     [_containerView addSubview: _failedLabel];
     
-    _mainLabel.text = (self.currentOperation==PasscodeOperationChange) ? NSLocalizedStringWithDefaultValue(@"New", _localizationTableName, [NSBundle mainBundle], @"Enter new Passcode", @"The soon-to-be entered passcode") : NSLocalizedStringWithDefaultValue(@"Locked", _localizationTableName, [NSBundle mainBundle], @"Enter Passcode", @"The needed passcode");
+    _mainLabel.text = (self.currentOperation==PasscodeOperationEnable) ? NSLocalizedStringWithDefaultValue(@"New", _localizationTableName, [NSBundle mainBundle], @"Enter a new Passcode", @"The soon-to-be entered passcode") : NSLocalizedStringWithDefaultValue(@"Locked", _localizationTableName, [NSBundle mainBundle], @"Enter Passcode", @"The needed passcode");
     
     _mainLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _failedLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -387,6 +386,7 @@
     _failedLabel.backgroundColor    = _failedAttemptLabelBackgroundColor;
     _failedLabel.textColor          = _failedAttemptLabelTextColor;
     _passcodeTextField.text         = @"";
+    _failedLabel.hidden             = YES;
     
     switch (_currentOperation) {
         case PasscodeOperationChange:

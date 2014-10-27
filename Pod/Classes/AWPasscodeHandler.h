@@ -110,7 +110,7 @@
 /**
  @brief Adds a FROST EFFECT to any UIView
  */
-- (UIView*)createFrostView:(UIColor*)backgroundColor;
++ (UIView*)createFrostView:(UIColor*)backgroundColor;
 
 // #### Methods used to display the passcode
 - (void)showLockScreenWithAnimation:(BOOL)animated;

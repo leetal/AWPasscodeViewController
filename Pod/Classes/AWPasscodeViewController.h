@@ -12,6 +12,7 @@ typedef NS_ENUM(NSInteger, PasscodeOperation) {
     PasscodeOperationNone,
     PasscodeOperationEnable,
     PasscodeOperationChange,
+    PasscodeOperationChangeLocked,
     PasscodeOperationChangeVerify,
     PasscodeOperationChangeMissmatch,
     PasscodeOperationLocked,
