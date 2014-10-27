@@ -68,9 +68,12 @@
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_disable attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual
                                                              toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
     
-    // Subscribe to the passcode notifactions.
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_passcodeWillClose:) name:@"passcodeViewControllerWillClose" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_passcodeDidClose:) name:@"passcodeViewControllerDidClose" object:nil];
+    // Subscribe to the passcode notifications.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_maxAttemptsReached:) name:@"AW_maxNumberOfFailedAttemptsReached" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_wrongPasscodeEntered:) name:@"AW_wrongPasscodeEntered" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_passcodeEnteredSuccessfully:) name:@"AW_passcodeWasEnteredSuccessfully" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_passcodeWillClose:) name:@"AW_passcodeViewControllerWillClose" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_passcodeDidClose:) name:@"AW_passcodeViewControllerDidClose" object:nil];
     
     // Add button handlers
     [_enable addTarget: self action: @selector(enablePasscode) forControlEvents: UIControlEventTouchUpInside];
@@ -91,6 +94,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)updateSettings {
@@ -128,12 +135,25 @@
 
 #pragma mark - Notification handlers
 
+- (void)_passcodeEnteredSuccessfully:(NSNotification*)note {
+    NSLog(@"AWPasscodeViewController - Entered successfully");
+}
+
+- (void)_maxAttemptsReached:(NSNotification*)note {
+    NSLog(@"AWPasscodeViewController - Max attempts reached");
+}
+
+- (void)_wrongPasscodeEntered:(NSNotification*)note {
+    NSLog(@"AWPasscodeViewController - Wrong passcode entered");
+}
+
 - (void)_passcodeWillClose:(NSNotification*)note {
+    NSLog(@"AWPasscodeViewController - Will close");
     [self updateSettings];
 }
 
 - (void)_passcodeDidClose:(NSNotification*)note {
-    
+    NSLog(@"AWPasscodeViewController - Did close");
 }
 
 @end

@@ -290,7 +290,7 @@
 #pragma mark - Passcode view handling
 
 - (void)_cancelAndDismissMe {
-    [[NSNotificationCenter defaultCenter] postNotificationName: @"passcodeViewControllerWillClose" object:self userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName: @"AW_passcodeViewControllerWillClose" object:self userInfo:nil];
     
     if (_isDisplayedAsLockscreen) {
         
@@ -300,12 +300,12 @@
         [self _resetHandler];
         _isDisplayedAsLockscreen = NO;
         
-        [[NSNotificationCenter defaultCenter] postNotificationName: @"passcodeViewControllerDidClose" object:self userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName: @"AW_passcodeViewControllerDidClose" object:self userInfo:nil];
     } else if(_passcodeVC) {
         // Displayed in a modal or another contoller
         [_passcodeVC popToCallerAnimated:YES];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName: @"passcodeViewControllerDidClose" object:self userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName: @"AW_passcodeViewControllerDidClose" object:self userInfo:nil];
     }
 }
 
@@ -559,7 +559,7 @@
             case PasscodeOperationDisable:
             {
                 if ([typedString isEqualToString: savedPasscode]) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName: @"passcodeWasEnteredSuccessfully" object:self userInfo:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName: @"AW_passcodeWasEnteredSuccessfully" object:self userInfo:nil];
                     
                     [self _dismissMe];
                 }
@@ -574,7 +574,7 @@
             case PasscodeOperationLocked:
             {
                 if ([typedString isEqualToString: savedPasscode]) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName: @"passcodeWasEnteredSuccessfully" object:self userInfo:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName: @"AW_passcodeWasEnteredSuccessfully" object:self userInfo:nil];
                     
                     [self _dismissMe];
                 }
@@ -684,7 +684,7 @@
     _failedAttempts++;
     
     // Send notification of wrong passcode entered
-    [[NSNotificationCenter defaultCenter] postNotificationName: @"wrongPasscodeEntered" object:self userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName: @"AW_wrongPasscodeEntered" object:self userInfo:nil];
     
     [_passcodeVC increaseFailCount:_failedAttempts];
     
@@ -692,7 +692,7 @@
         _failedAttempts == _maxNumberOfAllowedFailedAttempts) {
         
         // Notify about the fail
-        [[NSNotificationCenter defaultCenter] postNotificationName: @"maxNumberOfFailedAttemptsReached" object:self userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName: @"AW_maxNumberOfFailedAttemptsReached" object:self userInfo:nil];
         
         // Set operation to disable
         _passcodeVC.currentOperation = PasscodeOperationDisable;
