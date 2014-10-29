@@ -20,20 +20,6 @@
                ReferencedContainer = "container:AWPasscodeViewController.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "10E7DB7E19FE75BE00438987"
-               BuildableName = "AWPasscodeViewController Tests.xctest"
-               BlueprintName = "AWPasscodeViewController Tests"
-               ReferencedContainer = "container:AWPasscodeViewController.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -49,16 +35,6 @@
                BlueprintIdentifier = "6003F5AD195388D20070C39A"
                BuildableName = "Tests.xctest"
                BlueprintName = "Tests"
-               ReferencedContainer = "container:AWPasscodeViewController.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "10E7DB7E19FE75BE00438987"
-               BuildableName = "AWPasscodeViewController Tests.xctest"
-               BlueprintName = "AWPasscodeViewController Tests"
                ReferencedContainer = "container:AWPasscodeViewController.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -78,7 +54,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">

@@ -660,6 +660,7 @@
 
 
 - (void)_keyboardHandler {
+    [_passcodeTextField resignFirstResponder];
     if(!_passcodeTextField.isFirstResponder) {
         [_passcodeTextField becomeFirstResponder];
     }
