@@ -86,14 +86,16 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+    
     [_passcodeTextField becomeFirstResponder];
 }
 
 
 - (void)viewDidAppear:(BOOL)animated {
    
-    if (!_passcodeTextField.isFirstResponder)
-        [_passcodeTextField becomeFirstResponder];
+    [self _keyboardHandler];
+    
         // We need to make sure that we always start in the correct rotation if launched in landscape
     if((_wasHidden || AW_SYSTEM_VERSION_LESS_THAN(@"8.0")) && _currentOperation == PasscodeOperationLocked) {
         _wasHidden = NO;
@@ -105,6 +107,8 @@
 
 
 - (void)viewWillDisappear:(BOOL)animated {
+    // Make sure that the statusbar changes
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     
     // Will use this to make sure that the keyboard actually gets dismissed
     id firstResponder = [UIResponder getCurrentFirstResponderReference];
@@ -401,6 +405,8 @@
         default:
             break;
     }
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
 }
 
 

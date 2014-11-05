@@ -403,9 +403,10 @@
 
 #pragma mark - Displaying
 - (void)_showDummyView {
+    _dummyView.backgroundColor = [UIColor clearColor];
     _dummyView = [self _createFrostView:[UIColor whiteColor]];
     _dummyView.translatesAutoresizingMaskIntoConstraints = NO;
-    _dummyView.backgroundColor = [UIColor clearColor];
+    
     
     // Create a nice looking font indication "locked" state
     UIFont *lockedFont = [UIFont fontWithName: @"AvenirNext-Regular" size:30];
