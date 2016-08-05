@@ -9,22 +9,21 @@
 /* Begin PBXBuildFile section */
 		1A48D36CD04253FEE01FD79DBA37A8BF /* Pods-AWPasscodeViewController-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = DF8B4C8AF42A98D35EA02EEBEE3C9389 /* Pods-AWPasscodeViewController-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1FCCABFA066114362A8DA2C9878363B5 /* Pods-Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C84C4216EE455AAA8E5C34DBBAAF1859 /* Pods-Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4431A9B9261369ED9F40F684BCF1DD8D /* AWPasscodeHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E35F4B26BEE3E3F2DC75CF217A7BF5D /* AWPasscodeHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		464D9186C5998119FBEF3F9EF1A0D88E /* UIResponder+FirstResponderReference.h in Headers */ = {isa = PBXBuildFile; fileRef = D3EFD90A4414D99C35DF9ABC9E13F61C /* UIResponder+FirstResponderReference.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		78D2527B2D9935B4D37BCF2E29553B3B /* AWPasscodeBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AFAA9961C3E186A72095E1FE97D835CE /* AWPasscodeBundle.bundle */; };
-		7C1501AC595B16109D47658F468C1FB1 /* AWPasscodeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F0926E19CA2E43784EB20B1582AD7F31 /* AWPasscodeHandler.m */; };
+		258E34E891DE8BE29AA0E81E43E40F40 /* UIResponder+FirstResponderReference.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B0089FD5D7ACFFEEEFD12BFE6AFF9B /* UIResponder+FirstResponderReference.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		322E289F20F8021C979004541BCFE30B /* AWKeychainUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7625DCFA2D4BD47F1084A6AC6A7F2A4C /* AWKeychainUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		35180063E12D5230B943E29997B632CA /* AWPasscodeViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF3C9780A76FFC6C8BABD127C00CCE7C /* AWPasscodeViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62605C222E491D453F433CA75CEB0811 /* AWPasscodeViewController-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B451A62443587B4FB02C91906973F22 /* AWPasscodeViewController-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		818F4557583C59EA8D7C608AD189947C /* Pods-AWPasscodeViewController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C13D2E35297A65120AD32CC456C42D4 /* Pods-AWPasscodeViewController-dummy.m */; };
-		8AF7444B2872B8DEA20D6749BAF8F8FA /* AWPasscodeViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = AF805DF980AEEA5EF91189B963DFEAF2 /* AWPasscodeViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8FD32A3AA574792F243BB8CA225F02A4 /* AWPasscodeViewController-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B646D08A8B486C61BB4D8EF9E11BD6C /* AWPasscodeViewController-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		962A30E2C9EB393F2F64FEE0C019182D /* AWPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 352B0325F176AF3D4264FC93CF5A166A /* AWPasscodeViewController.m */; };
+		87DA7BE377771844F1E98DC3F8B90202 /* AWPasscodeHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 0285EE8B33F02B84B5CE3DD4A364E4A6 /* AWPasscodeHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ACBFDA413C8590834C2B1DF85DE49054 /* AWPasscodeViewController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F90FE08A2FC63B70262F3306C08461 /* AWPasscodeViewController-dummy.m */; };
 		BE56F7E4E73D058174446A985BA10107 /* Pods-Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A2FF2096F20295FBFD77024918B014A8 /* Pods-Tests-dummy.m */; };
+		C7652B5C11246EE491A8FB7D6C42D9E9 /* AWPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE4465C9D9C29730C3CE82022F5039D8 /* AWPasscodeViewController.m */; };
 		C96395F2E42BFC0D43CFBF5AAB5E4776 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
-		CB8C8CDC51D7B68371C31082E2480995 /* UIResponder+FirstResponderReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3966C4E98EBE858F74B5F2DFE7C734 /* UIResponder+FirstResponderReference.m */; };
-		D6A6FDC69F8C74AA80D0591A86DBD5B2 /* AWKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F187F793F05DA5882CB4BE66649756 /* AWKeychainUtils.m */; };
+		CC1CBC4D297F2B9E3B89EA7690DB3035 /* AWKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EDAB8962D74E80424F1502595D2634F0 /* AWKeychainUtils.m */; };
+		D35C3B392E5A3C551611AA664F135B51 /* AWPasscodeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 16061727DCD32AC88CA1991CBCF6B5A7 /* AWPasscodeHandler.m */; };
+		D9618F96D3F0A7738E630FD96FE9E79C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
 		DAA6106079B1C3E1064DFF1B4A207C80 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
-		E6D727CCAD5915904C88D298BB00728E /* AWKeychainUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 81C0BCED0A41A8712C73EDBC1C237EE1 /* AWKeychainUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E8828C722623F8B18D18BD0A1110477D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
-		F6C12FF47A9394BCDE79860E85EA3AE3 /* AWPasscodeViewController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 048AFAE4F7219BCF8C2EB6E007B4FFAA /* AWPasscodeViewController-dummy.m */; };
+		F8BCD997336DD3BE52B07A27567D841A /* UIResponder+FirstResponderReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E899D47FED8612FBE9C8FC8FAAB22FB /* UIResponder+FirstResponderReference.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,83 +31,74 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 792DBB03DC51899AFC9ABFA6128D12E2;
+			remoteGlobalIDString = 0209732879CB2E7B758922C5DEDEE23B;
 			remoteInfo = AWPasscodeViewController;
-		};
-		957C212CE10A4E9490727BC7B606B144 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 79991F436F4B8DCA43CD427CA4DAAF53;
-			remoteInfo = "AWPasscodeViewController-AWPasscodeBundle";
 		};
 		EBC40987A1949CEC5284333459E0793B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 792DBB03DC51899AFC9ABFA6128D12E2;
+			remoteGlobalIDString = 0209732879CB2E7B758922C5DEDEE23B;
 			remoteInfo = AWPasscodeViewController;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0285EE8B33F02B84B5CE3DD4A364E4A6 /* AWPasscodeHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AWPasscodeHandler.h; sourceTree = "<group>"; };
 		028E05EFEDB729F576C7CA146BF03BB6 /* Pods-AWPasscodeViewController-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AWPasscodeViewController-resources.sh"; sourceTree = "<group>"; };
-		048AFAE4F7219BCF8C2EB6E007B4FFAA /* AWPasscodeViewController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AWPasscodeViewController-dummy.m"; sourceTree = "<group>"; };
+		06A7B7DBE871F822B6F90B858C7B2CA5 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0C13D2E35297A65120AD32CC456C42D4 /* Pods-AWPasscodeViewController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AWPasscodeViewController-dummy.m"; sourceTree = "<group>"; };
-		0F40503279E190569CA3013F6C1CF3A1 /* AWPasscodeViewController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AWPasscodeViewController.xcconfig; sourceTree = "<group>"; };
-		1B122F7EC68BDD24DD3D658D017D5F3E /* Pods_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1B646D08A8B486C61BB4D8EF9E11BD6C /* AWPasscodeViewController-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AWPasscodeViewController-umbrella.h"; sourceTree = "<group>"; };
+		0E899D47FED8612FBE9C8FC8FAAB22FB /* UIResponder+FirstResponderReference.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+FirstResponderReference.m"; sourceTree = "<group>"; };
+		16061727DCD32AC88CA1991CBCF6B5A7 /* AWPasscodeHandler.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = AWPasscodeHandler.m; sourceTree = "<group>"; };
 		1C13F9A58850C21328CD88C99B81C51D /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		1E35F4B26BEE3E3F2DC75CF217A7BF5D /* AWPasscodeHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AWPasscodeHandler.h; sourceTree = "<group>"; };
 		1F1C13B0EF45E3663D59F318DC06DC86 /* Pods-AWPasscodeViewController-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AWPasscodeViewController-frameworks.sh"; sourceTree = "<group>"; };
+		24FF801CFC23FFDBA4B8B15163F17106 /* AWPasscodeViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AWPasscodeViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		286450E1A0494E4D8E66D9261B85E0B7 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		352B0325F176AF3D4264FC93CF5A166A /* AWPasscodeViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = AWPasscodeViewController.m; sourceTree = "<group>"; };
+		36F90FE08A2FC63B70262F3306C08461 /* AWPasscodeViewController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AWPasscodeViewController-dummy.m"; sourceTree = "<group>"; };
 		4A8A56950A6CD3E9B80B78E759FE444F /* Pods-Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		4EF21D100AF19C684D0E6366ADF0A80F /* ResourceBundle-AWPasscodeBundle-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-AWPasscodeBundle-Info.plist"; sourceTree = "<group>"; };
+		54F5ACCF9B1098408694EE72F4B01DC1 /* AWPasscodeViewController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AWPasscodeViewController.xcconfig; sourceTree = "<group>"; };
 		59F4DF84DA28E61D09E94A10DB4D9CF0 /* Pods-Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Tests-frameworks.sh"; sourceTree = "<group>"; };
 		6ED3EFC91E6FC69C308B78F8500DC5FC /* Pods-AWPasscodeViewController.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-AWPasscodeViewController.modulemap"; sourceTree = "<group>"; };
 		6FF17E344CDEE54A4AD4845701C7F797 /* Pods-Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Tests.modulemap"; sourceTree = "<group>"; };
-		76ABAB5DFE2EB2067C34088C2D518ED3 /* AWPasscodeViewController.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = AWPasscodeViewController.modulemap; sourceTree = "<group>"; };
+		7625DCFA2D4BD47F1084A6AC6A7F2A4C /* AWKeychainUtils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AWKeychainUtils.h; sourceTree = "<group>"; };
 		78DEEEA0666F03157BD8D3C820C5AC92 /* Pods-Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Tests-acknowledgements.plist"; sourceTree = "<group>"; };
-		81C0BCED0A41A8712C73EDBC1C237EE1 /* AWKeychainUtils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AWKeychainUtils.h; sourceTree = "<group>"; };
 		85F2B9B3D8922E09D3D419128B23DFFB /* Pods-AWPasscodeViewController.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AWPasscodeViewController.release.xcconfig"; sourceTree = "<group>"; };
 		8E77DF5DD89071F2115D0DA26E0E6035 /* Pods-AWPasscodeViewController.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AWPasscodeViewController.debug.xcconfig"; sourceTree = "<group>"; };
-		8F3492A531C769678D88C081F61D9477 /* AWPasscodeViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AWPasscodeViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9F3966C4E98EBE858F74B5F2DFE7C734 /* UIResponder+FirstResponderReference.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+FirstResponderReference.m"; sourceTree = "<group>"; };
-		A0F187F793F05DA5882CB4BE66649756 /* AWKeychainUtils.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = AWKeychainUtils.m; sourceTree = "<group>"; };
+		94D09557B46BA6CD07CDFD499E22B39E /* AWPasscodeViewController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AWPasscodeViewController-prefix.pch"; sourceTree = "<group>"; };
+		9B451A62443587B4FB02C91906973F22 /* AWPasscodeViewController-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AWPasscodeViewController-umbrella.h"; sourceTree = "<group>"; };
 		A2FF2096F20295FBFD77024918B014A8 /* Pods-Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Tests-dummy.m"; sourceTree = "<group>"; };
 		A9D67C31F23809C13D11F957A1C063D8 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AF805DF980AEEA5EF91189B963DFEAF2 /* AWPasscodeViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AWPasscodeViewController.h; sourceTree = "<group>"; };
-		AFAA9961C3E186A72095E1FE97D835CE /* AWPasscodeBundle.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWPasscodeBundle.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		B32BBE37997EBF87012D62F49DD3A348 /* AWPasscodeViewController.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = AWPasscodeViewController.modulemap; sourceTree = "<group>"; };
 		B5E239F331892428487EF4886D8D2E4B /* Pods-AWPasscodeViewController-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AWPasscodeViewController-acknowledgements.markdown"; sourceTree = "<group>"; };
-		C78CEB1AFA5FA2811FC3E8E54F91B87B /* AWPasscodeViewController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AWPasscodeViewController-prefix.pch"; sourceTree = "<group>"; };
+		B7CC6D2A5EB38018BC6C8072DB92B3E0 /* Pods_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE4465C9D9C29730C3CE82022F5039D8 /* AWPasscodeViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = AWPasscodeViewController.m; sourceTree = "<group>"; };
 		C84C4216EE455AAA8E5C34DBBAAF1859 /* Pods-Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Tests-umbrella.h"; sourceTree = "<group>"; };
 		CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		D3EFD90A4414D99C35DF9ABC9E13F61C /* UIResponder+FirstResponderReference.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIResponder+FirstResponderReference.h"; sourceTree = "<group>"; };
 		D550A903BFD5FE7747241EB790D6E2B4 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
-		D858F2A0E7F7A6CA26177B89D3F47C5A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D6B0089FD5D7ACFFEEEFD12BFE6AFF9B /* UIResponder+FirstResponderReference.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIResponder+FirstResponderReference.h"; sourceTree = "<group>"; };
 		DC116751D81E6256BB447ADBD66C1650 /* Pods-Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Tests-resources.sh"; sourceTree = "<group>"; };
 		DF8B4C8AF42A98D35EA02EEBEE3C9389 /* Pods-AWPasscodeViewController-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AWPasscodeViewController-umbrella.h"; sourceTree = "<group>"; };
-		E4B893A73E53CAC1DDD7FBF4AA1333B1 /* Pods_AWPasscodeViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AWPasscodeViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5372DD9C841EC18364A4421D8B4DEA1 /* Pods-AWPasscodeViewController-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AWPasscodeViewController-acknowledgements.plist"; sourceTree = "<group>"; };
-		F0926E19CA2E43784EB20B1582AD7F31 /* AWPasscodeHandler.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = AWPasscodeHandler.m; sourceTree = "<group>"; };
+		EDAB8962D74E80424F1502595D2634F0 /* AWKeychainUtils.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = AWKeychainUtils.m; sourceTree = "<group>"; };
+		F6E1A223D3B813024AEC93033A294205 /* Pods_AWPasscodeViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AWPasscodeViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF3C9780A76FFC6C8BABD127C00CCE7C /* AWPasscodeViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AWPasscodeViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		03B3B2408AA164C818E51EB06C4020E6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E8828C722623F8B18D18BD0A1110477D /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		3137D6533C4B7342F6811DD3BA090EFC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				DAA6106079B1C3E1064DFF1B4A207C80 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84D091DA50A8B50D54DEB604A862CA3C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9618F96D3F0A7738E630FD96FE9E79C /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,26 +110,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A41B2983AC6B2DA912E610AC6A17EBC0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0A1E6F32A0EB7CFEEE510AB132755FFF /* AWPasscodeViewController */ = {
-			isa = PBXGroup;
-			children = (
-				F238B1708C9141F98F26DC99BF76A122 /* Pod */,
-				B07169E20569CC665B2E8D809E7A55EF /* Support Files */,
-			);
-			name = AWPasscodeViewController;
-			path = ../..;
-			sourceTree = "<group>";
-		};
 		1B2C92E56C75E9FBCE16AD411314C7EF /* Pods-AWPasscodeViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,23 +139,70 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
+		536284338739A25DC556422E5183A49A /* AWPasscodeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A24D1A3D8AD0BCA592CA8D424A4EE82E /* Pod */,
+				541BC5CB59403E4229DB34134D8E91B3 /* Support Files */,
+			);
+			name = AWPasscodeViewController;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		541BC5CB59403E4229DB34134D8E91B3 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				B32BBE37997EBF87012D62F49DD3A348 /* AWPasscodeViewController.modulemap */,
+				54F5ACCF9B1098408694EE72F4B01DC1 /* AWPasscodeViewController.xcconfig */,
+				36F90FE08A2FC63B70262F3306C08461 /* AWPasscodeViewController-dummy.m */,
+				94D09557B46BA6CD07CDFD499E22B39E /* AWPasscodeViewController-prefix.pch */,
+				9B451A62443587B4FB02C91906973F22 /* AWPasscodeViewController-umbrella.h */,
+				06A7B7DBE871F822B6F90B858C7B2CA5 /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/AWPasscodeViewController";
+			sourceTree = "<group>";
+		};
 		7DB346D0F39D3F0E887471402A8071AB = {
 			isa = PBXGroup;
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				9011622B1C3DF3437648509F955D1C37 /* Development Pods */,
 				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
-				C387993F0520AAA16C9A4C99549A6EBE /* Products */,
+				B02721194AAB8A59D073C46A1A3B5E86 /* Products */,
 				ABEAED55D01BFD42B75D00313A55B32B /* Targets Support Files */,
 			);
+			sourceTree = "<group>";
+		};
+		8334CEBC4D9E32DA8E1010FAFEFDFC27 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				7625DCFA2D4BD47F1084A6AC6A7F2A4C /* AWKeychainUtils.h */,
+				EDAB8962D74E80424F1502595D2634F0 /* AWKeychainUtils.m */,
+				0285EE8B33F02B84B5CE3DD4A364E4A6 /* AWPasscodeHandler.h */,
+				16061727DCD32AC88CA1991CBCF6B5A7 /* AWPasscodeHandler.m */,
+				FF3C9780A76FFC6C8BABD127C00CCE7C /* AWPasscodeViewController.h */,
+				BE4465C9D9C29730C3CE82022F5039D8 /* AWPasscodeViewController.m */,
+				D6B0089FD5D7ACFFEEEFD12BFE6AFF9B /* UIResponder+FirstResponderReference.h */,
+				0E899D47FED8612FBE9C8FC8FAAB22FB /* UIResponder+FirstResponderReference.m */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		9011622B1C3DF3437648509F955D1C37 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0A1E6F32A0EB7CFEEE510AB132755FFF /* AWPasscodeViewController */,
+				536284338739A25DC556422E5183A49A /* AWPasscodeViewController */,
 			);
 			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		A24D1A3D8AD0BCA592CA8D424A4EE82E /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				8334CEBC4D9E32DA8E1010FAFEFDFC27 /* Classes */,
+			);
+			path = Pod;
 			sourceTree = "<group>";
 		};
 		ABEAED55D01BFD42B75D00313A55B32B /* Targets Support Files */ = {
@@ -194,19 +214,14 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		B07169E20569CC665B2E8D809E7A55EF /* Support Files */ = {
+		B02721194AAB8A59D073C46A1A3B5E86 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				76ABAB5DFE2EB2067C34088C2D518ED3 /* AWPasscodeViewController.modulemap */,
-				0F40503279E190569CA3013F6C1CF3A1 /* AWPasscodeViewController.xcconfig */,
-				048AFAE4F7219BCF8C2EB6E007B4FFAA /* AWPasscodeViewController-dummy.m */,
-				C78CEB1AFA5FA2811FC3E8E54F91B87B /* AWPasscodeViewController-prefix.pch */,
-				1B646D08A8B486C61BB4D8EF9E11BD6C /* AWPasscodeViewController-umbrella.h */,
-				D858F2A0E7F7A6CA26177B89D3F47C5A /* Info.plist */,
-				4EF21D100AF19C684D0E6366ADF0A80F /* ResourceBundle-AWPasscodeBundle-Info.plist */,
+				24FF801CFC23FFDBA4B8B15163F17106 /* AWPasscodeViewController.framework */,
+				F6E1A223D3B813024AEC93033A294205 /* Pods_AWPasscodeViewController.framework */,
+				B7CC6D2A5EB38018BC6C8072DB92B3E0 /* Pods_Tests.framework */,
 			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/AWPasscodeViewController";
+			name = Products;
 			sourceTree = "<group>";
 		};
 		B6C5239DAA880100CF4CEEEC748F17AA /* Pods-Tests */ = {
@@ -235,40 +250,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C387993F0520AAA16C9A4C99549A6EBE /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AFAA9961C3E186A72095E1FE97D835CE /* AWPasscodeBundle.bundle */,
-				8F3492A531C769678D88C081F61D9477 /* AWPasscodeViewController.framework */,
-				E4B893A73E53CAC1DDD7FBF4AA1333B1 /* Pods_AWPasscodeViewController.framework */,
-				1B122F7EC68BDD24DD3D658D017D5F3E /* Pods_Tests.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		E0072217A2FE15B6FB25616B02475E41 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				81C0BCED0A41A8712C73EDBC1C237EE1 /* AWKeychainUtils.h */,
-				A0F187F793F05DA5882CB4BE66649756 /* AWKeychainUtils.m */,
-				1E35F4B26BEE3E3F2DC75CF217A7BF5D /* AWPasscodeHandler.h */,
-				F0926E19CA2E43784EB20B1582AD7F31 /* AWPasscodeHandler.m */,
-				AF805DF980AEEA5EF91189B963DFEAF2 /* AWPasscodeViewController.h */,
-				352B0325F176AF3D4264FC93CF5A166A /* AWPasscodeViewController.m */,
-				D3EFD90A4414D99C35DF9ABC9E13F61C /* UIResponder+FirstResponderReference.h */,
-				9F3966C4E98EBE858F74B5F2DFE7C734 /* UIResponder+FirstResponderReference.m */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-		F238B1708C9141F98F26DC99BF76A122 /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				E0072217A2FE15B6FB25616B02475E41 /* Classes */,
-			);
-			path = Pod;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -280,6 +261,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5A6125BD6AEA101C94614FE980ABDFCD /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				322E289F20F8021C979004541BCFE30B /* AWKeychainUtils.h in Headers */,
+				87DA7BE377771844F1E98DC3F8B90202 /* AWPasscodeHandler.h in Headers */,
+				62605C222E491D453F433CA75CEB0811 /* AWPasscodeViewController-umbrella.h in Headers */,
+				35180063E12D5230B943E29997B632CA /* AWPasscodeViewController.h in Headers */,
+				258E34E891DE8BE29AA0E81E43E40F40 /* UIResponder+FirstResponderReference.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B2A4691FED92A7076A3FF66163656870 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -288,21 +281,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C9C32C146A68D828E24271D7C4EE04BA /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E6D727CCAD5915904C88D298BB00728E /* AWKeychainUtils.h in Headers */,
-				4431A9B9261369ED9F40F684BCF1DD8D /* AWPasscodeHandler.h in Headers */,
-				8FD32A3AA574792F243BB8CA225F02A4 /* AWPasscodeViewController-umbrella.h in Headers */,
-				8AF7444B2872B8DEA20D6749BAF8F8FA /* AWPasscodeViewController.h in Headers */,
-				464D9186C5998119FBEF3F9EF1A0D88E /* UIResponder+FirstResponderReference.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		0209732879CB2E7B758922C5DEDEE23B /* AWPasscodeViewController */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6F1DF544F44760544D6690C7639E7853 /* Build configuration list for PBXNativeTarget "AWPasscodeViewController" */;
+			buildPhases = (
+				85884C727969116F7D4801F7A950B5FB /* Sources */,
+				84D091DA50A8B50D54DEB604A862CA3C /* Frameworks */,
+				5A6125BD6AEA101C94614FE980ABDFCD /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AWPasscodeViewController;
+			productName = AWPasscodeViewController;
+			productReference = 24FF801CFC23FFDBA4B8B15163F17106 /* AWPasscodeViewController.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		219988B62554857499AC03E88EEFFB13 /* Pods-AWPasscodeViewController */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F3257FDA5780994DBB3DB6EC803074F9 /* Build configuration list for PBXNativeTarget "Pods-AWPasscodeViewController" */;
@@ -318,44 +316,8 @@
 			);
 			name = "Pods-AWPasscodeViewController";
 			productName = "Pods-AWPasscodeViewController";
-			productReference = E4B893A73E53CAC1DDD7FBF4AA1333B1 /* Pods_AWPasscodeViewController.framework */;
+			productReference = F6E1A223D3B813024AEC93033A294205 /* Pods_AWPasscodeViewController.framework */;
 			productType = "com.apple.product-type.framework";
-		};
-		792DBB03DC51899AFC9ABFA6128D12E2 /* AWPasscodeViewController */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FB8DD21512E41B73B89B7EEC08AF5AAB /* Build configuration list for PBXNativeTarget "AWPasscodeViewController" */;
-			buildPhases = (
-				F99B3E3F98FD9CA70B2F44DA0F6B562D /* Sources */,
-				03B3B2408AA164C818E51EB06C4020E6 /* Frameworks */,
-				C9037EB611F9193A2A4391623F7C88CF /* Resources */,
-				C9C32C146A68D828E24271D7C4EE04BA /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				042294B0A54785561AFD62C1382F9AC3 /* PBXTargetDependency */,
-			);
-			name = AWPasscodeViewController;
-			productName = AWPasscodeViewController;
-			productReference = 8F3492A531C769678D88C081F61D9477 /* AWPasscodeViewController.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		79991F436F4B8DCA43CD427CA4DAAF53 /* AWPasscodeViewController-AWPasscodeBundle */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 00F2231CE30BFDB02363C7FDDAE9828D /* Build configuration list for PBXNativeTarget "AWPasscodeViewController-AWPasscodeBundle" */;
-			buildPhases = (
-				900790640A36DA368F36127093057F74 /* Sources */,
-				A41B2983AC6B2DA912E610AC6A17EBC0 /* Frameworks */,
-				8033C516B6A5349A4CF8E478260B7A0D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "AWPasscodeViewController-AWPasscodeBundle";
-			productName = "AWPasscodeViewController-AWPasscodeBundle";
-			productReference = AFAA9961C3E186A72095E1FE97D835CE /* AWPasscodeBundle.bundle */;
-			productType = "com.apple.product-type.bundle";
 		};
 		D32A36A9D86FA6175878E1AF7B3952B5 /* Pods-Tests */ = {
 			isa = PBXNativeTarget;
@@ -372,7 +334,7 @@
 			);
 			name = "Pods-Tests";
 			productName = "Pods-Tests";
-			productReference = 1B122F7EC68BDD24DD3D658D017D5F3E /* Pods_Tests.framework */;
+			productReference = B7CC6D2A5EB38018BC6C8072DB92B3E0 /* Pods_Tests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -392,35 +354,16 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = C387993F0520AAA16C9A4C99549A6EBE /* Products */;
+			productRefGroup = B02721194AAB8A59D073C46A1A3B5E86 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				792DBB03DC51899AFC9ABFA6128D12E2 /* AWPasscodeViewController */,
-				79991F436F4B8DCA43CD427CA4DAAF53 /* AWPasscodeViewController-AWPasscodeBundle */,
+				0209732879CB2E7B758922C5DEDEE23B /* AWPasscodeViewController */,
 				219988B62554857499AC03E88EEFFB13 /* Pods-AWPasscodeViewController */,
 				D32A36A9D86FA6175878E1AF7B3952B5 /* Pods-Tests */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		8033C516B6A5349A4CF8E478260B7A0D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C9037EB611F9193A2A4391623F7C88CF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				78D2527B2D9935B4D37BCF2E29553B3B /* AWPasscodeBundle.bundle in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D37830596181D05E173E07740A43C60 /* Sources */ = {
@@ -431,10 +374,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		900790640A36DA368F36127093057F74 /* Sources */ = {
+		85884C727969116F7D4801F7A950B5FB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC1CBC4D297F2B9E3B89EA7690DB3035 /* AWKeychainUtils.m in Sources */,
+				D35C3B392E5A3C551611AA664F135B51 /* AWPasscodeHandler.m in Sources */,
+				ACBFDA413C8590834C2B1DF85DE49054 /* AWPasscodeViewController-dummy.m in Sources */,
+				C7652B5C11246EE491A8FB7D6C42D9E9 /* AWPasscodeViewController.m in Sources */,
+				F8BCD997336DD3BE52B07A27567D841A /* UIResponder+FirstResponderReference.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,37 +394,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F99B3E3F98FD9CA70B2F44DA0F6B562D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D6A6FDC69F8C74AA80D0591A86DBD5B2 /* AWKeychainUtils.m in Sources */,
-				7C1501AC595B16109D47658F468C1FB1 /* AWPasscodeHandler.m in Sources */,
-				F6C12FF47A9394BCDE79860E85EA3AE3 /* AWPasscodeViewController-dummy.m in Sources */,
-				962A30E2C9EB393F2F64FEE0C019182D /* AWPasscodeViewController.m in Sources */,
-				CB8C8CDC51D7B68371C31082E2480995 /* UIResponder+FirstResponderReference.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		042294B0A54785561AFD62C1382F9AC3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "AWPasscodeViewController-AWPasscodeBundle";
-			target = 79991F436F4B8DCA43CD427CA4DAAF53 /* AWPasscodeViewController-AWPasscodeBundle */;
-			targetProxy = 957C212CE10A4E9490727BC7B606B144 /* PBXContainerItemProxy */;
-		};
 		6389D7F65EB162E739A2426F5C812B6E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AWPasscodeViewController;
-			target = 792DBB03DC51899AFC9ABFA6128D12E2 /* AWPasscodeViewController */;
+			target = 0209732879CB2E7B758922C5DEDEE23B /* AWPasscodeViewController */;
 			targetProxy = EBC40987A1949CEC5284333459E0793B /* PBXContainerItemProxy */;
 		};
 		BF887D904EB4868207FE53B8F7000F17 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AWPasscodeViewController;
-			target = 792DBB03DC51899AFC9ABFA6128D12E2 /* AWPasscodeViewController */;
+			target = 0209732879CB2E7B758922C5DEDEE23B /* AWPasscodeViewController */;
 			targetProxy = 886D9F18A2D4969213DBD5764E0492FE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -665,26 +595,9 @@
 			};
 			name = Release;
 		};
-		54DBE1627DF493FCCF48308C887A8A20 /* Release */ = {
+		A0E73382285F4F4A706D034E24CA1EA5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0F40503279E190569CA3013F6C1CF3A1 /* AWPasscodeViewController.xcconfig */;
-			buildSettings = {
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/AWPasscodeViewController";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/AWPasscodeViewController/ResourceBundle-AWPasscodeBundle-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PRODUCT_NAME = AWPasscodeBundle;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
-		56F450866C9961E94A21EC6A43542DA9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0F40503279E190569CA3013F6C1CF3A1 /* AWPasscodeViewController.xcconfig */;
+			baseConfigurationReference = 54F5ACCF9B1098408694EE72F4B01DC1 /* AWPasscodeViewController.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
@@ -710,52 +623,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
-		};
-		69FEBA887544BF00DD28BAF2834C1A4D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0F40503279E190569CA3013F6C1CF3A1 /* AWPasscodeViewController.xcconfig */;
-			buildSettings = {
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/AWPasscodeViewController";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/AWPasscodeViewController/ResourceBundle-AWPasscodeBundle-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PRODUCT_NAME = AWPasscodeBundle;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
-		918E39ACCBF6FB5621B626537976445E /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0F40503279E190569CA3013F6C1CF3A1 /* AWPasscodeViewController.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/AWPasscodeViewController/AWPasscodeViewController-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/AWPasscodeViewController/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/AWPasscodeViewController/AWPasscodeViewController.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = AWPasscodeViewController;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
 		};
 		AA86990CDEBBA67AD9015B17F30086C9 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -790,18 +657,38 @@
 			};
 			name = Release;
 		};
+		BFDABCB4497C14398E7E3AAF0DC5E4CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54F5ACCF9B1098408694EE72F4B01DC1 /* AWPasscodeViewController.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/AWPasscodeViewController/AWPasscodeViewController-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/AWPasscodeViewController/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/AWPasscodeViewController/AWPasscodeViewController.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = AWPasscodeViewController;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00F2231CE30BFDB02363C7FDDAE9828D /* Build configuration list for PBXNativeTarget "AWPasscodeViewController-AWPasscodeBundle" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				69FEBA887544BF00DD28BAF2834C1A4D /* Debug */,
-				54DBE1627DF493FCCF48308C887A8A20 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -820,20 +707,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		6F1DF544F44760544D6690C7639E7853 /* Build configuration list for PBXNativeTarget "AWPasscodeViewController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0E73382285F4F4A706D034E24CA1EA5 /* Debug */,
+				BFDABCB4497C14398E7E3AAF0DC5E4CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F3257FDA5780994DBB3DB6EC803074F9 /* Build configuration list for PBXNativeTarget "Pods-AWPasscodeViewController" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3EFB223F7F27829ED278719D7C74A4CA /* Debug */,
 				AA86990CDEBBA67AD9015B17F30086C9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FB8DD21512E41B73B89B7EEC08AF5AAB /* Build configuration list for PBXNativeTarget "AWPasscodeViewController" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				56F450866C9961E94A21EC6A43542DA9 /* Debug */,
-				918E39ACCBF6FB5621B626537976445E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

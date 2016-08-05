@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '7.0'
   s.requires_arc = true
   s.source_files = 'Pod/Classes'
-  s.resource_bundles = {
-    'AWPasscodeBundle' => ['Pod/Assets/*.png']
-  }
+#  s.resource_bundles = {
+#    'AWPasscodeBundle' => ['Pod/Assets/*.png']
+#  }
 end
