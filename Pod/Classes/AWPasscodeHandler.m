@@ -511,7 +511,7 @@
     
     _passcodeVC = [AWPasscodeViewController new];
     _passcodeVC.currentOperation = operation;
-    _passcodeVC.backgroundImage = backgroundImage;
+    _passcodeVC.backgroundImage = [backgroundImage copy];
     
     if (!modal) {
         [viewController.navigationController pushViewController:_passcodeVC

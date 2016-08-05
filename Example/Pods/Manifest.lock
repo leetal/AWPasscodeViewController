@@ -1,5 +1,5 @@
 PODS:
-  - AWPasscodeViewController (1.0.2)
+  - AWPasscodeViewController (1.0.3)
 
 DEPENDENCIES:
   - AWPasscodeViewController (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  AWPasscodeViewController: 7d93bf840df326cf1d1f3b86a7c8856e727d5f7e
+  AWPasscodeViewController: 85171f4fb19b0dc561b7d6116d7e60d816b9fba7
 
 PODFILE CHECKSUM: 1d21a1c0c1ec9ce0dee13d7c1996236259c8088a
 

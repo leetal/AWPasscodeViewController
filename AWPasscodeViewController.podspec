@@ -9,23 +9,19 @@
 
 Pod::Spec.new do |s|
   s.name             = "AWPasscodeViewController"
-  s.version          = "1.0.2"
+  s.version          = "1.0.3"
   s.summary          = "A simple iOS 7/8 style Passcode Lock Screen"
   s.description      = <<-DESC
                        Simple to use iOS 7/8 style Passcode with theming support and auto-layout. Compatible from iOS 6 and onwards.
                        DESC
   s.homepage         = "https://github.com/leetal/AWPasscodeViewController"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "Alexander Widerberg" => "alexander.widerberg@cloudme.com" }
   s.source           = { :git => "https://github.com/leetal/AWPasscodeViewController.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-
   s.platform     = :ios, '7.0'
   s.requires_arc = true
-
   s.source_files = 'Pod/Classes'
   s.resource_bundles = {
-    'AWPasscodeViewController' => ['Pod/Assets/*.png']
+    'AWPasscodeBundle' => ['Pod/Assets/*.png']
   }
 end

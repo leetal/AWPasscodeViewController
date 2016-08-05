@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1CA8F1E1853BA1026A0799A2 /* Pods_AWPasscodeViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A44484F42B426068DED654 /* Pods_AWPasscodeViewController.framework */; };
+		3BDD10F61D54934D001CB20B /* AWPasscodeViewControllerLocalization.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3BDD10F41D54934D001CB20B /* AWPasscodeViewControllerLocalization.strings */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -37,6 +38,7 @@
 /* Begin PBXFileReference section */
 		175AD56D476597C3C06DF9D7 /* AWPasscodeViewController.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = AWPasscodeViewController.podspec; path = ../AWPasscodeViewController.podspec; sourceTree = "<group>"; };
 		264F4F51E15A88FDA901475A /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
+		3BDD10F51D54934D001CB20B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AWPasscodeViewControllerLocalization.strings; sourceTree = "<group>"; };
 		5340D955C0E93A408A631F72 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		59D96FA4E0D3CB22B1440E12 /* Pods-AWPasscodeViewController.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWPasscodeViewController.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AWPasscodeViewController/Pods-AWPasscodeViewController.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* AWPasscodeViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AWPasscodeViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,6 +154,7 @@
 		6003F594195388D20070C39A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3BDD10F41D54934D001CB20B /* AWPasscodeViewControllerLocalization.strings */,
 				6003F595195388D20070C39A /* AWPasscodeViewController-Info.plist */,
 				6003F596195388D20070C39A /* InfoPlist.strings */,
 				6003F599195388D20070C39A /* main.m */,
@@ -273,6 +276,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				3BDD10F61D54934D001CB20B /* AWPasscodeViewControllerLocalization.strings in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -410,6 +414,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		3BDD10F41D54934D001CB20B /* AWPasscodeViewControllerLocalization.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3BDD10F51D54934D001CB20B /* en */,
+			);
+			name = AWPasscodeViewControllerLocalization.strings;
+			sourceTree = "<group>";
+		};
 		6003F596195388D20070C39A /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

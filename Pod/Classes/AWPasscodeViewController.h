@@ -95,7 +95,7 @@ typedef NS_ENUM(NSInteger, PasscodeOperation) {
 /**
  @brief The background image of the presenting view.
  */
-@property (nonatomic, weak) UIImage   *backgroundImage;
+@property (nonatomic, copy) UIImage   *backgroundImage;
 /**
  @brief The character for the passcode digit.
  */
