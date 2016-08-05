@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "AWPasscodeViewController"
-  s.version          = "1.0.3"
+  s.version          = "1.1.0"
   s.summary          = "A simple iOS 7/8 style Passcode Lock Screen"
   s.description      = <<-DESC
                        Simple to use iOS 7/8 style Passcode with theming support and auto-layout. Compatible from iOS 6 and onwards.
