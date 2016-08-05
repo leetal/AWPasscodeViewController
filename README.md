@@ -5,6 +5,10 @@
 [![License](https://img.shields.io/cocoapods/l/AWPasscodeViewController.svg?style=flat)](http://cocoadocs.org/docsets/AWPasscodeViewController)
 [![Platform](https://img.shields.io/cocoapods/p/AWPasscodeViewController.svg?style=flat)](http://cocoadocs.org/docsets/AWPasscodeViewController)
 
+## Example
+
+![Example run](Example.gif)
+
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
@@ -20,7 +24,7 @@ it, simply add the following line to your Podfile:
 
 ## Author
 
-Alexander Widerberg, alexander.widerberg@cloudme.com
+Alexander Widerberg, widerbergaren@gmail.com
 
 ## License
 
