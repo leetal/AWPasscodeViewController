@@ -1,0 +1,6 @@
+framework module AWPasscodeViewController {
+  umbrella header "AWPasscodeViewController-umbrella.h"
+
+  export *
+  module * { export * }
+}

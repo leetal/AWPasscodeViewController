@@ -1,5 +1,0 @@
-#import <Foundation/Foundation.h>
-@interface PodsDummy_Pods_AWPasscodeViewController_AWPasscodeViewController : NSObject
-@end
-@implementation PodsDummy_Pods_AWPasscodeViewController_AWPasscodeViewController
-@end

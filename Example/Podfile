@@ -1,11 +1,11 @@
 source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
+use_frameworks!
 
-target 'AWPasscodeViewController', :exclusive => true do
+target 'AWPasscodeViewController' do
   pod "AWPasscodeViewController", :path => "../"
 end
 
-target 'Tests', :exclusive => true do
+target 'Tests' do
   pod "AWPasscodeViewController", :path => "../"
-
-  
 end

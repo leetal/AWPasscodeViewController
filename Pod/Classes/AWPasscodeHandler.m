@@ -497,9 +497,12 @@
     
     if (AW_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         // First, capture a screenshot of the background so that the frost effect is visible all times (iOS7+ only)
-        UIGraphicsBeginImageContextWithOptions(viewController.view.bounds.size, viewController.view.opaque, 0.0);
-        [viewController.view.layer renderInContext:UIGraphicsGetCurrentContext()];
-        backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsBeginImageContextWithOptions(viewController.view.frame.size, NO, [UIScreen mainScreen].scale);
+        BOOL success = [viewController.view drawViewHierarchyInRect:viewController.view.bounds afterScreenUpdates:NO];
+        
+        if (success) {
+            backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
+        }
         UIGraphicsEndImageContext();
     }
     
