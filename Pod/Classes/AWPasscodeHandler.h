@@ -12,7 +12,7 @@
 #define AW_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 #define AW_SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
 
-@interface AWPasscodeHandler : NSObject
+@interface AWPasscodeHandler : NSObject <CAAnimationDelegate>
 /**
  @brief  Returns the shared instance of the passcode handler.
  */
