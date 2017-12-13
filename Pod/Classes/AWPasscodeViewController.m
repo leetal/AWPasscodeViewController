@@ -269,8 +269,13 @@
     
     // Add the "containers" view to self and containerview
     [self.view addSubview:_containerView];
-    [_containerView addSubview:_passcodeEntryView];
-    
+    if ([_containerView isKindOfClass:[UIVisualEffectView class]]) {
+        [((UIVisualEffectView*)_containerView).contentView addSubview:_passcodeEntryView];
+    } else {
+        // Is UIView
+        [_containerView addSubview:_passcodeEntryView];
+    }
+
     // Additional view setup
     [self _setupLabels];
     [self _setupPasscodeFields];
@@ -287,8 +292,12 @@
     _mainLabel.textColor = _labelTextColor;
     _mainLabel.font = _labelFont;
     _mainLabel.textAlignment = NSTextAlignmentCenter;
-    [_containerView addSubview: _mainLabel];
-    
+    if ([_containerView isKindOfClass:[UIVisualEffectView class]]) {
+        [((UIVisualEffectView*)_containerView).contentView addSubview:_mainLabel];
+    } else {
+        // Is UIView
+        [_containerView addSubview: _mainLabel];
+    }
     
     _failedLabel = [UILabel new];
     _failedLabel.text = @"1 Passcode Failed Attempt";
@@ -298,7 +307,12 @@
     _failedLabel.textColor = _failedAttemptLabelTextColor;
     _failedLabel.font = _labelFont;
     _failedLabel.textAlignment = NSTextAlignmentCenter;
-    [_containerView addSubview: _failedLabel];
+    if ([_containerView isKindOfClass:[UIVisualEffectView class]]) {
+        [((UIVisualEffectView*)_containerView).contentView addSubview:_failedLabel];
+    } else {
+        // Is UIView
+        [_containerView addSubview: _failedLabel];
+    }
     
     _mainLabel.text = (self.currentOperation==PasscodeOperationEnable) ? NSLocalizedStringWithDefaultValue(@"New", _localizationTableName, [NSBundle mainBundle], @"Enter a new Passcode", @"The soon-to-be entered passcode") : NSLocalizedStringWithDefaultValue(@"Locked", _localizationTableName, [NSBundle mainBundle], @"Enter Passcode", @"The needed passcode");
     
@@ -640,14 +654,8 @@
 
 
 - (void)increaseFailCount:(NSUInteger)fails {
-    
-    if (fails == 1) {
-        _failedLabel.text =
-        NSLocalizedStringWithDefaultValue(@"Failed1", _localizationTableName, [NSBundle mainBundle], @"1 failed attempt", @"First failed attempt");
-    }
-    else {
-        _failedLabel.text = [NSString stringWithFormat: NSLocalizedStringWithDefaultValue(@"Failed1", _localizationTableName, [NSBundle mainBundle], @"%i failed attempts", @"Subsequent failed attempts"), fails];
-    }
+
+    _failedLabel.text = [NSString stringWithFormat: NSLocalizedStringWithDefaultValue(@"Failed1", _localizationTableName, [NSBundle mainBundle], @"%i failed attempts", @"Subsequent failed attempts"), fails];
     _failedLabel.layer.cornerRadius = [AWPasscodeHandler getLabelHeight:_failedLabel andFont:_labelFont] * 0.65f;
     _failedLabel.clipsToBounds = true;
     _failedLabel.hidden = NO;

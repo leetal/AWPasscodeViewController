@@ -212,7 +212,6 @@
         UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
         blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
         //blurView.frame = view.frame;
-        
     } else if(AW_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) { //iOS 7
         blurView = [[UIToolbar alloc] initWithFrame:CGRectZero];
     } else {
@@ -416,7 +415,12 @@
     lockedLabel.font = lockedFont;
     lockedLabel.text = NSLocalizedStringWithDefaultValue(@"Locked", _passcodeVC.localizationTableName, [NSBundle mainBundle], @"Application Locked", @"Application Locked");
     lockedLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [_dummyView addSubview:lockedLabel];
+    if ([_dummyView isKindOfClass:[UIVisualEffectView class]]) {
+        [((UIVisualEffectView*)_dummyView).contentView addSubview:lockedLabel];
+    } else {
+        // Is UIView
+        [_dummyView addSubview:lockedLabel];
+    }
     
     UIWindow *currentWindow = [UIApplication sharedApplication].windows[0];
     [currentWindow addSubview: _dummyView];

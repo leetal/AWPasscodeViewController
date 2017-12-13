@@ -18,9 +18,10 @@ Pod::Spec.new do |s|
   s.license          = 'MIT'
   s.author           = { "Alexander Widerberg" => "alexander.widerberg@cloudme.com" }
   s.source           = { :git => "https://github.com/leetal/AWPasscodeViewController.git", :tag => s.version.to_s }
-  s.platform     = :ios, '7.0'
-  s.requires_arc = true
-  s.source_files = 'Pod/Classes'
+  s.platform         = :ios, '7.0'
+  s.requires_arc     = true
+  s.source_files     = 'Pod/Classes'
+  s.ios.frameworks   = 'UIKit' , 'QuartzCore', 'Foundation', 'CoreGraphics'
 #  s.resource_bundles = {
 #    'AWPasscodeBundle' => ['Pod/Assets/*.png']
 #  }
